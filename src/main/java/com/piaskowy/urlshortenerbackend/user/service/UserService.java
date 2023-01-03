@@ -1,5 +1,6 @@
 package com.piaskowy.urlshortenerbackend.user.service;
 
+import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
@@ -14,10 +15,13 @@ public class UserService {
     }
 
     public User registerUser(RegisterRequest request) {
-        checkIfUserExists(request.getEmail());
 
-        User user =
-                User.builder()
+        userRepository.findByEmail(request.getEmail())
+                .ifPresent(u -> {
+                    throw new UserAlreadyExistsException("User with email: " + request.getEmail() + " already exists");
+                });
+
+        User user = User.builder()
                         .email(request.getEmail())
                         //TODO: add password encoding
                         .password(request.getPassword())
@@ -27,11 +31,4 @@ public class UserService {
 
         return userRepository.saveAndFlush(user);
     }
-    
-    private void checkIfUserExists(String email) {
-        userRepository.findByEmail(email)
-                //TODO: Add custom exception
-                .orElseThrow(() -> new RuntimeException("Istnieje"));
-    }
-    
 }
