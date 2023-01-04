@@ -4,6 +4,7 @@ import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsExceptio
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
+import com.piaskowy.urlshortenerbackend.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
