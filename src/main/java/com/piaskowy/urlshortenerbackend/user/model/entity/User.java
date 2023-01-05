@@ -5,11 +5,12 @@ import lombok.*;
 
 import java.util.Objects;
 
-@Entity(name = "users")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
+@Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
