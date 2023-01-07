@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.user.Controller;
+package com.piaskowy.urlshortenerbackend.auth.user.controller;
 
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
