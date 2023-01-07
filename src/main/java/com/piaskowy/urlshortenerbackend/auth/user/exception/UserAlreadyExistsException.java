@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.user.exception;
+package com.piaskowy.urlshortenerbackend.auth.user.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

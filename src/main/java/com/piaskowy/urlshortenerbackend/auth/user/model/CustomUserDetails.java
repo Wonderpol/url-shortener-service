@@ -1,6 +1,6 @@
-package com.piaskowy.urlshortenerbackend.user.model;
+package com.piaskowy.urlshortenerbackend.auth.user.model;
 
-import com.piaskowy.urlshortenerbackend.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

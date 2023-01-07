@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.user.model.entity;
+package com.piaskowy.urlshortenerbackend.auth.user.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,11 +15,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     private String email;
+    @NonNull
+    @Setter
     private String password;
+    @NonNull
     private String name;
+    @NonNull
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "is_email_verified")
+    private boolean isEmailVerified;
 
     @Override
     public boolean equals(final Object o) {

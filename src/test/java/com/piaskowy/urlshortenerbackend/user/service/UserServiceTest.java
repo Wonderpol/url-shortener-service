@@ -1,10 +1,10 @@
 package com.piaskowy.urlshortenerbackend.user.service;
 
-import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
-import com.piaskowy.urlshortenerbackend.user.model.entity.User;
-import com.piaskowy.urlshortenerbackend.user.model.request.RegisterRequest;
-import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
-import com.piaskowy.urlshortenerbackend.user.service.UserService;
+import com.piaskowy.urlshortenerbackend.auth.user.exception.UserAlreadyExistsException;
+import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import com.piaskowy.urlshortenerbackend.auth.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -40,7 +40,7 @@ class UserServiceTest {
         given(userRepository.findByEmail(any())).willReturn(Optional.of(new User()));
         //when
         //then
-        assertThatThrownBy(() -> userServiceUnderTests.registerUser(registerRequest))
+        assertThatThrownBy(() -> userServiceUnderTests.signUpNewUser(registerRequest))
                 .isInstanceOf(UserAlreadyExistsException.class)
                 .hasMessageContaining("User with email: " + registerRequest.getEmail() + " already exists");
     }
@@ -66,7 +66,7 @@ class UserServiceTest {
         given(userRepository.findByEmail(any())).willReturn(Optional.empty());
         given(userRepository.saveAndFlush(any())).willReturn(user);
         //when
-        userServiceUnderTests.registerUser(registerRequest);
+        userServiceUnderTests.signUpNewUser(registerRequest);
         //then
 
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
