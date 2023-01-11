@@ -17,7 +17,7 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @NonNull
-    private String token;
+    private String generatedToken;
     @NonNull
     private LocalDateTime createdAt;
     @NonNull

@@ -13,7 +13,7 @@ public class Utils {
 
     public static Token generateTokenForUser(User user) {
         return Token.builder()
-                .token(Utils.generateToken())
+                .generatedToken(Utils.generateToken())
                 .user(user)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(15))

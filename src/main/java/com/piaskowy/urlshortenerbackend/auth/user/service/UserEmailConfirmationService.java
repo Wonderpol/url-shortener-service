@@ -3,11 +3,15 @@ package com.piaskowy.urlshortenerbackend.auth.user.service;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.service.TokenService;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 import static com.piaskowy.urlshortenerbackend.auth.token.Utils.generateTokenForUser;
 
+@Service
+@Log4j2
 public class UserEmailConfirmationService {
     private final TokenService tokenService;
 

@@ -5,12 +5,15 @@ import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserRegistrationService userRegistrationService;
@@ -36,6 +39,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Transactional
     public void confirmUserEmail(String token) {
         User user = userEmailConfirmationService.validateEmailConfirmationToken(token).getUser();
         userRepository.enableUserAccount(user.getEmail());
