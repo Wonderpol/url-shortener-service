@@ -5,7 +5,7 @@ services:
     image: 'urlshortener:latest'
     build:
       context: .
-    container_name: urlshortener_app
+    container_name: app
     depends_on:
       - db
     ports:

@@ -2,7 +2,6 @@ package com.piaskowy.urlshortenerbackend.auth.token.service;
 
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.repository.TokenRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,11 +15,11 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
-    public void saveGeneratedToken(Token token) {
-        tokenRepository.save(token);
+    public Token saveGeneratedToken(Token token) {
+        return tokenRepository.saveAndFlush(token);
     }
 
-    public Optional<Token> getGeneratedToken(String token) {
+    public Optional<Token> getToken(String token) {
         return tokenRepository.findByToken(token);
     }
 

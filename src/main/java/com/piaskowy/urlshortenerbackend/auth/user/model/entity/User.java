@@ -25,8 +25,8 @@ public class User {
     @NonNull
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "is_email_verified")
-    private boolean isEmailVerified;
+    @Column(name = "is_enabled")
+    private boolean isEnabled = false;
 
     @Override
     public boolean equals(final Object o) {
