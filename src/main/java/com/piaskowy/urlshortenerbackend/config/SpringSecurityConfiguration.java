@@ -28,7 +28,7 @@ public class SpringSecurityConfiguration {
         http
                 .authorizeHttpRequests()
                 .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers(antMatcher("/api/v1/auth/**")).permitAll()
                 .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                 .and()
                 .authorizeHttpRequests()
@@ -41,6 +41,7 @@ public class SpringSecurityConfiguration {
 
         return http.build();
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
