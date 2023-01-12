@@ -27,12 +27,14 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String email) {
+        log.info("Trying to load user with provided email: " + email);
         return userRepository.findByEmail(email)
                 .map(CustomUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
     }
 
     public User registerUser(RegisterRequest registerRequest) {
+        log.info("User registration procedure started with given details: " + registerRequest.toString());
         User user = userRegistrationService.signUpNewUser(registerRequest);
         Token token = userEmailConfirmationService.generateAndSaveConfirmationToken(user);
 
@@ -41,6 +43,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void confirmUserEmail(String token) {
+        log.info("Email confirmation procedure started with token: " + token);
         User user = userEmailConfirmationService.validateEmailConfirmationToken(token).getUser();
         userRepository.enableUserAccount(user.getEmail());
     }

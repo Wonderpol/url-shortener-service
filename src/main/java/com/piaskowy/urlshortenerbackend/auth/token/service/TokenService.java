@@ -22,10 +22,12 @@ public class TokenService {
     }
 
     public Optional<Token> getToken(String token) {
+        log.info("Trying obtain token from database with given token string: " + token);
         return tokenRepository.findTokenByGeneratedToken(token);
     }
 
     public void setConfirmationDate(String token) {
+        log.info("Setting confirmation date for token");
         tokenRepository.setTokenConfirmationDate(token, LocalDateTime.now());
     }
 

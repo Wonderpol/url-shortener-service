@@ -1,8 +1,10 @@
 package com.piaskowy.urlshortenerbackend.auth.user.exception;
 
-import com.piaskowy.urlshortenerbackend.globalException.BaseNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class ConfirmationTokenNotFoundException extends BaseNotFoundException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ConfirmationTokenNotFoundException extends RuntimeException {
     public ConfirmationTokenNotFoundException(final String message) {
         super(message);
     }

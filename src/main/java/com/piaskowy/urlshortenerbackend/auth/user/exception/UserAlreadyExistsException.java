@@ -1,8 +1,10 @@
 package com.piaskowy.urlshortenerbackend.auth.user.exception;
 
-import com.piaskowy.urlshortenerbackend.globalException.BaseForbiddenException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class UserAlreadyExistsException extends BaseForbiddenException {
+@ResponseStatus(HttpStatus.FORBIDDEN)
+public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(final String message) {
         super(message);
     }

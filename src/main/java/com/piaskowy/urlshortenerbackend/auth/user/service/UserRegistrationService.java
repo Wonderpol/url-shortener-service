@@ -4,10 +4,12 @@ import com.piaskowy.urlshortenerbackend.auth.user.exception.UserAlreadyExistsExc
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class UserRegistrationService {
 
     private final UserRepository userRepository;
@@ -20,6 +22,7 @@ public class UserRegistrationService {
 
     public User signUpNewUser(RegisterRequest registerRequest) {
 
+        log.info("Checking if user with email " + registerRequest.getEmail() + " already exists");
         userRepository.findByEmail(registerRequest.getEmail())
                 .ifPresent(u -> {
                     throw new UserAlreadyExistsException("User with email: " + registerRequest.getEmail() + " already exists");
@@ -34,6 +37,7 @@ public class UserRegistrationService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        log.info("Saving new user " + user + " already exists");
         return userRepository.saveAndFlush(user);
     }
 }
