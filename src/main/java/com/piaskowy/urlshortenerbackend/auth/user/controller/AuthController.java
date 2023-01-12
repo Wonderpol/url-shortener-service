@@ -2,7 +2,7 @@ package com.piaskowy.urlshortenerbackend.auth.user.controller;
 
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
-import com.piaskowy.urlshortenerbackend.auth.user.service.UserRegistrationService;
+import com.piaskowy.urlshortenerbackend.auth.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +11,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/auth")
 public class AuthController {
 
-    private final UserRegistrationService userRegistrationService;
+    private final UserService userService;
 
-    public AuthController(final UserRegistrationService userRegistrationService) {
-        this.userRegistrationService = userRegistrationService;
+    public AuthController(final UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
-        return new ResponseEntity<>(userRegistrationService.registerUser(registerRequest), HttpStatus.OK);
+        return new ResponseEntity<>(userService.registerUser(registerRequest), HttpStatus.OK);
     }
+
+    @GetMapping("confirm-email")
+    public void confirm(@RequestParam String token) {
+        userService.confirmUserEmail(token);
+    }
+
 }

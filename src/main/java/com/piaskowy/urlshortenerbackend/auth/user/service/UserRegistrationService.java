@@ -1,26 +1,30 @@
 package com.piaskowy.urlshortenerbackend.auth.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.token.Utils;
-import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
-import com.piaskowy.urlshortenerbackend.auth.token.service.TokenService;
+import com.piaskowy.urlshortenerbackend.auth.user.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class UserRegistrationService {
 
-    private final UserService userService;
-    private final TokenService tokenService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserRegistrationService(final UserService userService, final TokenService tokenService) {
-        this.userService = userService;
-        this.tokenService = tokenService;
+    UserRegistrationService(final UserRepository userRepository, final PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(RegisterRequest registerRequest) {
+    public User signUpNewUser(RegisterRequest registerRequest) {
+
+        userRepository.findByEmail(registerRequest.getEmail())
+                .ifPresent(u -> {
+                    throw new UserAlreadyExistsException("User with email: " + registerRequest.getEmail() + " already exists");
+                });
+
         User user = User.builder()
                 .name(registerRequest.getName())
                 .lastName(registerRequest.getLastName())
@@ -28,15 +32,8 @@ public class UserRegistrationService {
                 .password(registerRequest.getPassword())
                 .build();
 
-        User registeredUser = userService.signUpNewUser(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Token emailConfirmationToken = Token.builder()
-                .token(Utils.generateToken())
-                .user(registeredUser)
-                .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusMinutes(15))
-                .build();
-        tokenService.saveGeneratedToken(emailConfirmationToken);
-        return registeredUser;
+        return userRepository.saveAndFlush(user);
     }
 }

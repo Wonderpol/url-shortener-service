@@ -2,13 +2,14 @@ package com.piaskowy.urlshortenerbackend.auth.token.service;
 
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.repository.TokenRepository;
-import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class TokenService {
     private final TokenRepository tokenRepository;
 
@@ -16,12 +17,12 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
-    public void saveGeneratedToken(Token token) {
-        tokenRepository.save(token);
+    public Token saveGeneratedToken(Token token) {
+        return tokenRepository.saveAndFlush(token);
     }
 
-    public Optional<Token> getGeneratedToken(String token) {
-        return tokenRepository.findByToken(token);
+    public Optional<Token> getToken(String token) {
+        return tokenRepository.findTokenByGeneratedToken(token);
     }
 
     public void setConfirmationDate(String token) {
