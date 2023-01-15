@@ -6,10 +6,16 @@ import com.piaskowy.urlshortenerbackend.auth.user.exception.ConfirmationTokenNot
 import com.piaskowy.urlshortenerbackend.auth.user.exception.EmailIsAlreadyConfirmedException;
 import com.piaskowy.urlshortenerbackend.auth.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.email.EmailService;
+import freemarker.template.TemplateException;
+import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.piaskowy.urlshortenerbackend.auth.token.Utils.generateTokenForUser;
 
@@ -17,9 +23,11 @@ import static com.piaskowy.urlshortenerbackend.auth.token.Utils.generateTokenFor
 @Log4j2
 public class UserEmailConfirmationService {
     private final TokenService tokenService;
+    private final EmailService emailService;
 
-    public UserEmailConfirmationService(final TokenService tokenService) {
+    public UserEmailConfirmationService(final TokenService tokenService, final EmailService emailService) {
         this.tokenService = tokenService;
+        this.emailService = emailService;
     }
 
     public Token generateAndSaveConfirmationToken(User user) {
@@ -46,6 +54,20 @@ public class UserEmailConfirmationService {
         tokenService.setConfirmationDate(token);
 
         return confirmationToken;
+    }
+
+    public void sendEmail() {
+
+        Map<String, Object> templateModel = new HashMap<>();
+        templateModel.put("recipientName", "Jan");
+        templateModel.put("text", "Test");
+        templateModel.put("senderName", "SenderName");
+
+        try {
+            emailService.sendEmail("piaskowyjasiek@gmai.com", "Test", templateModel);
+        } catch (IOException | TemplateException | MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
