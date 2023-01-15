@@ -7,12 +7,12 @@ import com.piaskowy.urlshortenerbackend.auth.user.exception.EmailIsAlreadyConfir
 import com.piaskowy.urlshortenerbackend.auth.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.email.EmailService;
-import freemarker.template.TemplateException;
+import com.piaskowy.urlshortenerbackend.email.model.Email;
 import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,18 +56,22 @@ public class UserEmailConfirmationService {
         return confirmationToken;
     }
 
-    public void sendEmail() {
+    @Async
+    public void sendAccountConfirmationEmail(String url, User user) throws MessagingException {
 
-        Map<String, Object> templateModel = new HashMap<>();
-        templateModel.put("recipientName", "Jan");
-        templateModel.put("text", "Test");
-        templateModel.put("senderName", "SenderName");
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("name", user.getName());
+        properties.put("link", url);
 
-        try {
-            emailService.sendEmail("piaskowyjasiek@gmai.com", "Test", templateModel);
-        } catch (IOException | TemplateException | MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        final Email email = Email.builder()
+                .to(user.getEmail())
+                .from("carrentalpo@gmail.com")
+                .subject("Confirm your email")
+                .properties(properties)
+                .template("email-confirm.html")
+                .build();
+
+        emailService.sendHtmlEmail(email);
     }
 
 }

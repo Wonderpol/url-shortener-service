@@ -1,49 +1,43 @@
 package com.piaskowy.urlshortenerbackend.email;
 
-import com.piaskowy.urlshortenerbackend.config.FreeMarkerConfiguration;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import com.piaskowy.urlshortenerbackend.email.model.Email;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import java.io.IOException;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 @Service
+@Log4j2
 public class EmailService {
 
-    private static final String NOREPLY_ADDRESS = "noreply@gmail.com";
-    private final FreeMarkerConfiguration freeMarkerConfiguration;
+    private final JavaMailSender mailSender;
+    private final SpringTemplateEngine springTemplateEngine;
 
-    private final JavaMailSender javaMailSender;
-
-    public EmailService(final FreeMarkerConfiguration freeMarkerConfiguration, final JavaMailSender javaMailSender) {
-        this.freeMarkerConfiguration = freeMarkerConfiguration;
-        this.javaMailSender = javaMailSender;
+    public EmailService(final JavaMailSender mailSender, final SpringTemplateEngine springTemplateEngine) {
+        this.mailSender = mailSender;
+        this.springTemplateEngine = springTemplateEngine;
     }
 
-    private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException, MessagingException {
+    public void sendHtmlEmail(Email email) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+        Context context = new Context();
+        context.setVariables(email.getProperties());
+        helper.setFrom(email.getFrom());
+        helper.setTo(email.getTo());
+        helper.setSubject(email.getSubject());
+        String html = springTemplateEngine.process(email.getTemplate(), context);
+        helper.setText(html, true);
 
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setFrom(NOREPLY_ADDRESS);
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(htmlBody, true);
-        javaMailSender.send(message);
-    }
+        log.info("Sending email to: " + email.getTo());
 
-    public void sendEmail(String to, String subject, Map<String, Object> templateModel) throws IOException, TemplateException, MessagingException {
-        Configuration configuration = freeMarkerConfiguration.freemarkerClassLoaderConfig().getConfiguration();
-        Template template = configuration.getTemplate("confirm-email.ftl");
-
-        String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(template, templateModel);
-        sendHtmlMessage(to, subject, htmlBody);
+        mailSender.send(message);
     }
 
 }

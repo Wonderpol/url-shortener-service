@@ -5,6 +5,7 @@ import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,11 +34,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
     }
 
-    public User registerUser(RegisterRequest registerRequest) {
+    public User registerUser(RegisterRequest registerRequest) throws MessagingException {
         log.info("User registration procedure started with given details: " + registerRequest.toString());
         User user = userRegistrationService.signUpNewUser(registerRequest);
         Token token = userEmailConfirmationService.generateAndSaveConfirmationToken(user);
-        userEmailConfirmationService.sendEmail();
+        userEmailConfirmationService.sendAccountConfirmationEmail("https://limanowa.in", user);
         return user;
     }
 
