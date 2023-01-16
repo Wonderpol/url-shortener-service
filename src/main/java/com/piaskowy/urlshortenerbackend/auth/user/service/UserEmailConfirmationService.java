@@ -57,11 +57,11 @@ public class UserEmailConfirmationService {
     }
 
     @Async
-    public void sendAccountConfirmationEmail(String url, User user) throws MessagingException {
+    public void sendAccountConfirmationEmail(String token, User user) throws MessagingException {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
-        properties.put("link", url);
+        properties.put("link", createConfirmationLink("http://localhost:8080", token));
 
         final Email email = Email.builder()
                 .to(user.getEmail())
@@ -72,6 +72,10 @@ public class UserEmailConfirmationService {
                 .build();
 
         emailService.sendHtmlEmail(email);
+    }
+
+    public String createConfirmationLink(String baseUrl, String token) {
+        return baseUrl + "/api/v1/auth/confirm-email?token=" + token;
     }
 
 }

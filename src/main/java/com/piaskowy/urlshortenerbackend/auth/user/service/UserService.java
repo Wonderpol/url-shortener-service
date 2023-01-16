@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
         log.info("User registration procedure started with given details: " + registerRequest.toString());
         User user = userRegistrationService.signUpNewUser(registerRequest);
         Token token = userEmailConfirmationService.generateAndSaveConfirmationToken(user);
-        userEmailConfirmationService.sendAccountConfirmationEmail("https://limanowa.in", user);
+        userEmailConfirmationService.sendAccountConfirmationEmail(token.getGeneratedToken(), user);
         return user;
     }
 
