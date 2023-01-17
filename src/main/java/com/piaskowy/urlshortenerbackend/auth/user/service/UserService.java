@@ -3,35 +3,34 @@ package com.piaskowy.urlshortenerbackend.auth.user.service;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.auth.user.model.request.AuthenticationRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.user.model.response.AuthenticationResponse;
 import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import com.piaskowy.urlshortenerbackend.config.JwtService;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2
-public class UserService implements UserDetailsService {
+public class UserService {
     private final UserRepository userRepository;
     private final UserRegistrationService userRegistrationService;
     private final UserEmailConfirmationService userEmailConfirmationService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    UserService(final UserRepository userRepository, final UserRegistrationService userRegistrationService, final UserEmailConfirmationService userEmailConfirmationService) {
+    UserService(final UserRepository userRepository, final UserRegistrationService userRegistrationService, final UserEmailConfirmationService userEmailConfirmationService, final AuthenticationManager authenticationManager, final JwtService jwtService) {
         this.userRepository = userRepository;
         this.userRegistrationService = userRegistrationService;
         this.userEmailConfirmationService = userEmailConfirmationService;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(final String email) {
-        log.info("Trying to load user with provided email: " + email);
-        return userRepository.findByEmail(email)
-                .map(CustomUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public User registerUser(RegisterRequest registerRequest) throws MessagingException {
@@ -40,6 +39,20 @@ public class UserService implements UserDetailsService {
         Token token = userEmailConfirmationService.generateAndSaveConfirmationToken(user);
         userEmailConfirmationService.sendAccountConfirmationEmail(token.getGeneratedToken(), user);
         return user;
+    }
+
+    public AuthenticationResponse authenticateUser(AuthenticationRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword())
+        );
+        String jwtToken = userRepository
+                .findByEmail(request.getEmail())
+                .map(u -> jwtService.generateToken(new CustomUserDetails(u)))
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + request.getEmail() + " not found"));
+
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
     @Transactional
