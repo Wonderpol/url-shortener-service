@@ -23,6 +23,11 @@ public class AuthController {
         return new ResponseEntity<>(userService.registerUser(registerRequest), HttpStatus.OK);
     }
 
+    @PostMapping("authenticate")
+    public ResponseEntity<User> authenticate(@RequestBody RegisterRequest registerRequest) throws MessagingException {
+        return new ResponseEntity<>(userService.registerUser(registerRequest), HttpStatus.OK);
+    }
+
     @GetMapping("confirm-email")
     public void confirm(@RequestParam String token) {
         userService.confirmUserEmail(token);
