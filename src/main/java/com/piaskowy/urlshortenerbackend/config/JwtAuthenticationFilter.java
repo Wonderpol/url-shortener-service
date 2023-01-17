@@ -1,7 +1,7 @@
 package com.piaskowy.urlshortenerbackend.config;
 
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
-import com.piaskowy.urlshortenerbackend.auth.user.service.UserService;
+import com.piaskowy.urlshortenerbackend.auth.user.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,11 +21,11 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserService userService;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public JwtAuthenticationFilter(final JwtService jwtService, final UserService userService) {
+    public JwtAuthenticationFilter(final JwtService jwtService, final CustomUserDetailsService customUserDetailsService) {
         this.jwtService = jwtService;
-        this.userService = userService;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String email = jwtService.extractEmail(jwtToken);
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             log.info("Authentication started for email: " + email);
-            CustomUserDetails userDetails = (CustomUserDetails) this.userService.loadUserByUsername(email);
+            CustomUserDetails userDetails = (CustomUserDetails) this.customUserDetailsService.loadUserByUsername(email);
             if (jwtService.isTokenValid(jwtToken, userDetails)) {
                 log.info("Jwt token is valid, updating authentication context.");
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

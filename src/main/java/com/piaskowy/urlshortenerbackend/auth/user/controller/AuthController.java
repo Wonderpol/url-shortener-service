@@ -1,7 +1,9 @@
 package com.piaskowy.urlshortenerbackend.auth.user.controller;
 
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.auth.user.model.request.AuthenticationRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.user.model.response.AuthenticationResponse;
 import com.piaskowy.urlshortenerbackend.auth.user.service.UserService;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
@@ -24,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("authenticate")
-    public ResponseEntity<User> authenticate(@RequestBody RegisterRequest registerRequest) throws MessagingException {
-        return new ResponseEntity<>(userService.registerUser(registerRequest), HttpStatus.OK);
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) throws MessagingException {
+        return new ResponseEntity<>(userService.authenticateUser(authenticationRequest), HttpStatus.OK);
     }
 
     @GetMapping("confirm-email")

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -28,8 +29,7 @@ public class JwtService {
     }
 
     public String generateToken(CustomUserDetails userDetails) {
-        //null or empty hashmap
-        return generateToken(null, userDetails);
+        return generateToken(new HashMap<>(), userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, CustomUserDetails userDetails) {

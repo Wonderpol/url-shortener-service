@@ -1,6 +1,6 @@
 package com.piaskowy.urlshortenerbackend.config;
 
-import com.piaskowy.urlshortenerbackend.auth.user.service.UserService;
+import com.piaskowy.urlshortenerbackend.auth.user.service.CustomUserDetailsService;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +19,14 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
-    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public SpringSecurityConfiguration(final UserService userService, final PasswordEncoder passwordEncoder, final JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.userService = userService;
+    public SpringSecurityConfiguration(final PasswordEncoder passwordEncoder, final JwtAuthenticationFilter jwtAuthenticationFilter, final CustomUserDetailsService customUserDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
@@ -54,7 +54,7 @@ public class SpringSecurityConfiguration {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(customUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder.encoder());
         return authProvider;
     }
@@ -64,12 +64,4 @@ public class SpringSecurityConfiguration {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(userService)
-//                .passwordEncoder(passwordEncoder.encoder());
-//    }
 }
