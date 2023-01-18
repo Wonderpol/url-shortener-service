@@ -9,6 +9,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+    //TODO: move it to configuration properites
     private static final String SECRET_KEY = "6B5970337336763979244226452948404D635166546A576D5A7134743777217A";
 
     public String extractEmail(String jwtToken) {
@@ -37,8 +39,8 @@ public class JwtService {
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setIssuedAt(java.sql.Date.valueOf(LocalDate.now()))
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(7)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

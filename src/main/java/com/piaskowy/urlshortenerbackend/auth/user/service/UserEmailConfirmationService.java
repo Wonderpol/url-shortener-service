@@ -1,10 +1,10 @@
 package com.piaskowy.urlshortenerbackend.auth.user.service;
 
+import com.piaskowy.urlshortenerbackend.auth.exception.ConfirmationTokenNotFoundException;
+import com.piaskowy.urlshortenerbackend.auth.exception.EmailIsAlreadyConfirmedException;
+import com.piaskowy.urlshortenerbackend.auth.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.service.TokenService;
-import com.piaskowy.urlshortenerbackend.auth.user.exception.ConfirmationTokenNotFoundException;
-import com.piaskowy.urlshortenerbackend.auth.user.exception.EmailIsAlreadyConfirmedException;
-import com.piaskowy.urlshortenerbackend.auth.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.email.EmailService;
 import com.piaskowy.urlshortenerbackend.email.model.Email;
@@ -61,6 +61,7 @@ public class UserEmailConfirmationService {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
+        //TODO: add baseUrl to application properties
         properties.put("link", createConfirmationLink("http://localhost:8080", token));
 
         final Email email = Email.builder()
