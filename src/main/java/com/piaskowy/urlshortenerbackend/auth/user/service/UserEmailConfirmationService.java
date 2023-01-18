@@ -61,6 +61,7 @@ public class UserEmailConfirmationService {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
+        //TODO: add baseUrl to application properties
         properties.put("link", createConfirmationLink("http://localhost:8080", token));
 
         final Email email = Email.builder()
