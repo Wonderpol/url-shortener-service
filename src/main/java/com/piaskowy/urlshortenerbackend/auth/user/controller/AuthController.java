@@ -6,6 +6,7 @@ import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.model.response.AuthenticationResponse;
 import com.piaskowy.urlshortenerbackend.auth.user.service.UserService;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,12 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) throws MessagingException {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest registerRequest) throws MessagingException {
         return new ResponseEntity<>(userService.registerUser(registerRequest), HttpStatus.OK);
     }
 
     @PostMapping("authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) throws MessagingException {
+    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) throws MessagingException {
         return new ResponseEntity<>(userService.authenticateUser(authenticationRequest), HttpStatus.OK);
     }
 
