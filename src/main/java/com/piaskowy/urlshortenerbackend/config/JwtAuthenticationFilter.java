@@ -46,9 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        final String jwtToken = authHeader.substring(7);
+        final String jwtToken;
         final String email;
         try {
+            jwtToken = authHeader.substring(7);
             email = jwtService.extractEmail(jwtToken);
         } catch (JwtException exception) {
             handleJwtException(response, exception, request);
@@ -72,6 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void handleJwtException(HttpServletResponse response, JwtException exception, HttpServletRequest request) throws IOException {
+        log.error("Jwt exception caught in JwtAuthenticationFilter due to " + exception.getMessage());
         String requestUri = request.getRequestURI();
 
         ErrorResponse errorResponse = ErrorResponse
