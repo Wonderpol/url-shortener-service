@@ -1,7 +1,10 @@
 package com.piaskowy.urlshortenerbackend.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
+import com.piaskowy.urlshortenerbackend.auth.user.model.response.ErrorResponse;
 import com.piaskowy.urlshortenerbackend.auth.user.service.CustomUserDetailsService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 @Log4j2
@@ -22,10 +26,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
+    private final ObjectMapper objectMapper;
 
-    public JwtAuthenticationFilter(final JwtService jwtService, final CustomUserDetailsService customUserDetailsService) {
+
+    public JwtAuthenticationFilter(final JwtService jwtService, final CustomUserDetailsService customUserDetailsService, final ObjectMapper objectMapper) {
         this.jwtService = jwtService;
         this.customUserDetailsService = customUserDetailsService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -39,8 +46,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        final String jwtToken = authHeader.substring(7);
-        final String email = jwtService.extractEmail(jwtToken);
+        final String jwtToken;
+        final String email;
+        try {
+            jwtToken = authHeader.substring(7);
+            email = jwtService.extractEmail(jwtToken);
+        } catch (JwtException exception) {
+            handleJwtException(response, exception, request);
+            return;
+        }
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             log.info("Authentication started for email: " + email);
             CustomUserDetails userDetails = (CustomUserDetails) this.customUserDetailsService.loadUserByUsername(email);
@@ -57,4 +71,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
+    private void handleJwtException(HttpServletResponse response, JwtException exception, HttpServletRequest request) throws IOException {
+        log.error("Jwt exception caught in JwtAuthenticationFilter due to " + exception.getMessage());
+        String requestUri = request.getRequestURI();
+
+        ErrorResponse errorResponse = ErrorResponse
+                .builder()
+                .timestamp(LocalDateTime.now())
+                .message(exception.getMessage())
+                .path(requestUri)
+                .build();
+
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+    }
+
 }
