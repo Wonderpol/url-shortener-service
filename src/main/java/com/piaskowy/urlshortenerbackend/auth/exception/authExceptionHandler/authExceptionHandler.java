@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.exception.exceptionGlobalHandler;
+package com.piaskowy.urlshortenerbackend.auth.exception.authExceptionHandler;
 
 import com.piaskowy.urlshortenerbackend.auth.exception.ConfirmationTokenNotFoundException;
 import com.piaskowy.urlshortenerbackend.auth.exception.EmailIsAlreadyConfirmedException;
@@ -19,14 +19,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class CustomAuthExceptionHandler {
+public class authExceptionHandler {
     @ExceptionHandler(value = {
             UserAlreadyExistsException.class,
             TokenExpiredException.class,
             EmailIsAlreadyConfirmedException.class,
             ConfirmationTokenNotFoundException.class
     })
-    public ResponseEntity<Object> handleUserAlreadyExistsException(RuntimeException ex, WebRequest request) {
+    public ResponseEntity<Object> handleUserAuthExceptions(RuntimeException ex, WebRequest request) {
         String requestUri = ((ServletWebRequest) request).getRequest().getRequestURI();
         ErrorResponse exceptionMessage = ErrorResponse.builder()
                 .message(ex.getMessage())

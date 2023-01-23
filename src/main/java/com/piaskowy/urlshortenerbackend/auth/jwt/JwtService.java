@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.config;
+package com.piaskowy.urlshortenerbackend.auth.jwt;
 
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
 import io.jsonwebtoken.Claims;
@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -16,10 +17,12 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@Log4j2
 public class JwtService {
 
     //TODO: move it to configuration properites
     private static final String SECRET_KEY = "6B5970337336763979244226452948404D635166546A576D5A7134743777217A";
+
 
     public String extractEmail(String jwtToken) {
         return extractSingleClaim(jwtToken, Claims::getSubject);
@@ -40,7 +43,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(java.sql.Date.valueOf(LocalDate.now()))
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(7)))
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(30)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

@@ -1,8 +1,11 @@
 package com.piaskowy.urlshortenerbackend.auth.user.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.piaskowy.urlshortenerbackend.url.model.Url;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Builder
@@ -27,6 +30,10 @@ public class User {
     private String lastName;
     @Column(name = "is_enabled")
     private boolean isEnabled = false;
+
+    @OneToMany
+    @JsonManagedReference
+    private List<Url> urls;
 
     @Override
     public boolean equals(final Object o) {

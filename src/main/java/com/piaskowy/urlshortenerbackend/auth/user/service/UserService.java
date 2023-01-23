@@ -1,5 +1,6 @@
 package com.piaskowy.urlshortenerbackend.auth.user.service;
 
+import com.piaskowy.urlshortenerbackend.auth.jwt.JwtService;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
@@ -7,7 +8,6 @@ import com.piaskowy.urlshortenerbackend.auth.user.model.request.AuthenticationRe
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.model.response.AuthenticationResponse;
 import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
-import com.piaskowy.urlshortenerbackend.config.JwtService;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;

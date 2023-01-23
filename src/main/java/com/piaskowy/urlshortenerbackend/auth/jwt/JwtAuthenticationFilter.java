@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.config;
+package com.piaskowy.urlshortenerbackend.auth.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
