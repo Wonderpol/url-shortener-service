@@ -1,11 +1,11 @@
 package com.piaskowy.urlshortenerbackend.url.service;
 
-import com.piaskowy.urlshortenerbackend.url.UrlRepository;
 import com.piaskowy.urlshortenerbackend.url.exception.UrlNotFoundException;
 import com.piaskowy.urlshortenerbackend.url.model.Url;
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.mapper.UrlModelMapper;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
+import com.piaskowy.urlshortenerbackend.url.repository.UrlRepository;
 import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
@@ -54,6 +54,14 @@ public class UrlService {
     public List<UrlDto> getAllUrls() {
         return urlRepository
                 .findAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    public List<UrlDto> getAllUserUrls(Long userId) {
+        return urlRepository
+                .getUrlsByUserId(userId)
                 .stream()
                 .map(mapper::toDto)
                 .toList();

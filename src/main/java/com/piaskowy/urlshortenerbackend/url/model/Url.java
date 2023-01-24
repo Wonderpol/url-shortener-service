@@ -27,6 +27,7 @@ public class Url {
     @Nonnull
     private LocalDateTime creationDate;
     private LocalDateTime lastVisited;
+    private LocalDateTime expireDate;
     @ManyToOne
     private User user;
 

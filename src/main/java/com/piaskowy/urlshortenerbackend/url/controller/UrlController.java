@@ -33,4 +33,8 @@ public class UrlController {
         return urlService.getAllUrls();
     }
 
+    @GetMapping(params = "userId")
+    public List<UrlDto> getAllUserUrls(@RequestParam Long userId) {
+        return urlService.getAllUserUrls(userId);
+    }
 }

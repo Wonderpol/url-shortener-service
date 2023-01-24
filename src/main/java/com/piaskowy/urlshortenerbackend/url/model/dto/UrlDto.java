@@ -12,5 +12,6 @@ public class UrlDto {
     private String shortUrl;
     private LocalDateTime creationDate;
     private LocalDateTime lastVisited;
+    private LocalDateTime expireDate;
     private UserDto user;
 }
