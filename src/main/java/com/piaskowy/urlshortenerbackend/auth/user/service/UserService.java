@@ -3,7 +3,9 @@ package com.piaskowy.urlshortenerbackend.auth.user.service;
 import com.piaskowy.urlshortenerbackend.auth.jwt.JwtService;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
+import com.piaskowy.urlshortenerbackend.auth.user.model.dto.UserDto;
 import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.auth.user.model.mapper.UserModelMapper;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.AuthenticationRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.user.model.response.AuthenticationResponse;
@@ -24,13 +26,15 @@ public class UserService {
     private final UserEmailConfirmationService userEmailConfirmationService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserModelMapper mapper;
 
-    UserService(final UserRepository userRepository, final UserRegistrationService userRegistrationService, final UserEmailConfirmationService userEmailConfirmationService, final AuthenticationManager authenticationManager, final JwtService jwtService) {
+    UserService(final UserRepository userRepository, final UserRegistrationService userRegistrationService, final UserEmailConfirmationService userEmailConfirmationService, final AuthenticationManager authenticationManager, final JwtService jwtService, final UserModelMapper userModelMapper) {
         this.userRepository = userRepository;
         this.userRegistrationService = userRegistrationService;
         this.userEmailConfirmationService = userEmailConfirmationService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.mapper = userModelMapper;
     }
 
     public User registerUser(RegisterRequest registerRequest) throws MessagingException {
@@ -53,6 +57,13 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email: " + request.getEmail() + " not found"));
 
         return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    public UserDto getUserById(Long id) {
+        return userRepository
+                .findUserById(id)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new UsernameNotFoundException("User with id: " + id + " not found"));
     }
 
     @Transactional
