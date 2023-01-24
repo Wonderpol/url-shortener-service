@@ -1,6 +1,6 @@
 package com.piaskowy.urlshortenerbackend.url.model;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.piaskowy.urlshortenerbackend.url.model.dto;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.dto.UserDto;
+import com.piaskowy.urlshortenerbackend.user.model.dto.UserDto;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.user.model.dto;
+package com.piaskowy.urlshortenerbackend.user.model.dto;
 
 import lombok.Data;
 

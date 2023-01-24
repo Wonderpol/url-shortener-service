@@ -1,6 +1,6 @@
-package com.piaskowy.urlshortenerbackend.auth.jwt;
+package com.piaskowy.urlshortenerbackend.auth.service;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
+import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

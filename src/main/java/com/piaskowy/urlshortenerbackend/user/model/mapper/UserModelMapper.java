@@ -1,7 +1,7 @@
-package com.piaskowy.urlshortenerbackend.auth.user.model.mapper;
+package com.piaskowy.urlshortenerbackend.user.model.mapper;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.dto.UserDto;
-import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.user.model.dto.UserDto;
+import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

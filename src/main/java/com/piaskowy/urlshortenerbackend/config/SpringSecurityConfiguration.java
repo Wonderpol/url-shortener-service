@@ -1,7 +1,7 @@
 package com.piaskowy.urlshortenerbackend.config;
 
 import com.piaskowy.urlshortenerbackend.auth.jwt.JwtAuthenticationFilter;
-import com.piaskowy.urlshortenerbackend.auth.user.service.CustomUserDetailsService;
+import com.piaskowy.urlshortenerbackend.user.service.CustomUserDetailsService;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

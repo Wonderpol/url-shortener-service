@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.user.model.response;
+package com.piaskowy.urlshortenerbackend.auth.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

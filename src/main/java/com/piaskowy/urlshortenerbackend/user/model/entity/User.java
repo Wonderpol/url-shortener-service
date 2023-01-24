@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.user.model.entity;
+package com.piaskowy.urlshortenerbackend.user.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.piaskowy.urlshortenerbackend.url.model.Url;

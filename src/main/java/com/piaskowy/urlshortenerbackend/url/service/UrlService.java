@@ -1,12 +1,12 @@
 package com.piaskowy.urlshortenerbackend.url.service;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.url.UrlRepository;
 import com.piaskowy.urlshortenerbackend.url.exception.UrlNotFoundException;
 import com.piaskowy.urlshortenerbackend.url.model.Url;
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.mapper.UrlModelMapper;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
+import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

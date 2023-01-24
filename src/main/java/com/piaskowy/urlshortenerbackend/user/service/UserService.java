@@ -1,20 +1,21 @@
-package com.piaskowy.urlshortenerbackend.auth.user.service;
+package com.piaskowy.urlshortenerbackend.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.jwt.JwtService;
+import com.piaskowy.urlshortenerbackend.auth.model.request.AuthenticationRequest;
+import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.model.response.AuthenticationResponse;
+import com.piaskowy.urlshortenerbackend.auth.service.JwtService;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
-import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
-import com.piaskowy.urlshortenerbackend.auth.user.model.dto.UserDto;
-import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
-import com.piaskowy.urlshortenerbackend.auth.user.model.mapper.UserModelMapper;
-import com.piaskowy.urlshortenerbackend.auth.user.model.request.AuthenticationRequest;
-import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
-import com.piaskowy.urlshortenerbackend.auth.user.model.response.AuthenticationResponse;
-import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
+import com.piaskowy.urlshortenerbackend.user.model.dto.UserDto;
+import com.piaskowy.urlshortenerbackend.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.user.model.mapper.UserModelMapper;
+import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +38,12 @@ public class UserService {
         this.mapper = userModelMapper;
     }
 
-    public User registerUser(RegisterRequest registerRequest) throws MessagingException {
+    public UserDto registerUser(RegisterRequest registerRequest) throws MessagingException {
         log.info("User registration procedure started with given details: " + registerRequest.toString());
         User user = userRegistrationService.signUpNewUser(registerRequest);
         Token token = userEmailConfirmationService.generateAndSaveConfirmationToken(user);
         userEmailConfirmationService.sendAccountConfirmationEmail(token.getGeneratedToken(), user);
-        return user;
+        return mapper.toDto(user);
     }
 
     public AuthenticationResponse authenticateUser(AuthenticationRequest request) {
@@ -64,6 +65,13 @@ public class UserService {
                 .findUserById(id)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new UsernameNotFoundException("User with id: " + id + " not found"));
+    }
+
+    public UserDto getCurrentUser(Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        User user = userDetails.user();
+        return mapper.toDto(user);
     }
 
     @Transactional

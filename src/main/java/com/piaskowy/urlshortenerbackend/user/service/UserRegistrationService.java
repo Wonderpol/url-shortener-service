@@ -1,9 +1,9 @@
-package com.piaskowy.urlshortenerbackend.auth.user.service;
+package com.piaskowy.urlshortenerbackend.user.service;
 
 import com.piaskowy.urlshortenerbackend.auth.exception.UserAlreadyExistsException;
-import com.piaskowy.urlshortenerbackend.auth.user.model.entity.User;
-import com.piaskowy.urlshortenerbackend.auth.user.model.request.RegisterRequest;
-import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.user.model.entity.User;
+import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

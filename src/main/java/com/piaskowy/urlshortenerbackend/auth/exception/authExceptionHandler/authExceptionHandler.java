@@ -4,7 +4,7 @@ import com.piaskowy.urlshortenerbackend.auth.exception.ConfirmationTokenNotFound
 import com.piaskowy.urlshortenerbackend.auth.exception.EmailIsAlreadyConfirmedException;
 import com.piaskowy.urlshortenerbackend.auth.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.exception.UserAlreadyExistsException;
-import com.piaskowy.urlshortenerbackend.auth.user.model.response.ErrorResponse;
+import com.piaskowy.urlshortenerbackend.auth.model.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

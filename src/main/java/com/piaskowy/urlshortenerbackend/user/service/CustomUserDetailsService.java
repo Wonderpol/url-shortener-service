@@ -1,7 +1,7 @@
-package com.piaskowy.urlshortenerbackend.auth.user.service;
+package com.piaskowy.urlshortenerbackend.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.CustomUserDetails;
-import com.piaskowy.urlshortenerbackend.auth.user.repository.UserRepository;
+import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
+import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,6 +1,6 @@
 package com.piaskowy.urlshortenerbackend.url.exception.urlExceptionHandler;
 
-import com.piaskowy.urlshortenerbackend.auth.user.model.response.ErrorResponse;
+import com.piaskowy.urlshortenerbackend.auth.model.response.ErrorResponse;
 import com.piaskowy.urlshortenerbackend.url.exception.UrlNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

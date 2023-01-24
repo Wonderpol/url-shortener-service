@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.user.model.request;
+package com.piaskowy.urlshortenerbackend.auth.model.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
