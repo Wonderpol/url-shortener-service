@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            log.info("Authentication started for email: " + email);
+            log.info("Updating security context procedure started for email: " + email);
             CustomUserDetails userDetails = (CustomUserDetails) this.customUserDetailsService.loadUserByUsername(email);
             if (jwtService.isTokenValid(jwtToken, userDetails)) {
                 log.info("Jwt token is valid, updating authentication context.");

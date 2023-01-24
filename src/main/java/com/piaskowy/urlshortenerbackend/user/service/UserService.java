@@ -47,6 +47,7 @@ public class UserService {
     }
 
     public AuthenticationResponse authenticateUser(AuthenticationRequest request) {
+        log.info("User authentication procedure started with given details: " + request.toString());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -68,6 +69,7 @@ public class UserService {
     }
 
     public UserDto getCurrentUser(Authentication authentication) {
+        log.info("Getting current user: " + authentication.getPrincipal().toString());
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         User user = userDetails.user();

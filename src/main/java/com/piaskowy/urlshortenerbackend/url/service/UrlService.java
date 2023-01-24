@@ -34,6 +34,7 @@ public class UrlService {
                 .user(userDetails.user())
                 .creationDate(LocalDateTime.now())
                 .url(addNewUrlRequest.getUrl())
+                .expireDate(addNewUrlRequest.getExpireDate())
                 .shortUrl("test")
                 .build();
 
