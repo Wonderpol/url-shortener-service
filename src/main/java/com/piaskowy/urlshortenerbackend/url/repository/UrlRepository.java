@@ -9,5 +9,7 @@ import java.util.Optional;
 public interface UrlRepository extends JpaRepository<Url, Long> {
     Optional<Url> getUrlByShortUrl(String shortUrl);
 
+    Optional<Url> getUrlById(Long id);
+
     List<Url> getUrlsByUserId(Long id);
 }

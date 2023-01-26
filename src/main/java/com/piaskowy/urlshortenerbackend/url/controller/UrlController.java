@@ -2,7 +2,6 @@ package com.piaskowy.urlshortenerbackend.url.controller;
 
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
-import com.piaskowy.urlshortenerbackend.url.service.UrlConverterService;
 import com.piaskowy.urlshortenerbackend.url.service.UrlService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +13,14 @@ import java.util.List;
 public class UrlController {
 
     private final UrlService urlService;
-    private final UrlConverterService converterService;
 
-    public UrlController(final UrlService urlService, final UrlConverterService converterService) {
+    public UrlController(final UrlService urlService) {
         this.urlService = urlService;
-        this.converterService = converterService;
     }
 
     @PostMapping
     public UrlDto convertUrl(@RequestBody AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
-        return converterService.convertUrl(addNewUrlRequest, authentication);
+        return urlService.addNewUrl(addNewUrlRequest, authentication);
     }
 
     @GetMapping(params = "shortUrl")

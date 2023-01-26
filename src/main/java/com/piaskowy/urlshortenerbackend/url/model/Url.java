@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -25,9 +25,9 @@ public class Url {
     @Nonnull
     private String shortUrl;
     @Nonnull
-    private LocalDateTime creationDate;
-    private LocalDateTime lastVisited;
-    private LocalDateTime expireDate;
+    private Instant creationDate;
+    private Instant lastVisited;
+    private Instant expireDate;
     @ManyToOne
     private User user;
 
