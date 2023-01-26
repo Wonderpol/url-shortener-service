@@ -26,22 +26,21 @@ public class UrlService {
         this.mapper = mapper;
     }
 
-    public void addNewUrl(AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
+    public Url addNewUrl(AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         Url url = Url.builder()
                 .user(userDetails.user())
                 .creationDate(LocalDateTime.now())
-                .url(addNewUrlRequest.getUrl())
+                .originalUrl(addNewUrlRequest.getUrl())
                 .expireDate(addNewUrlRequest.getExpireDate())
-                .shortUrl("test")
                 .build();
 
-        urlRepository.save(url);
+        return urlRepository.save(url);
     }
 
-    public UrlDto getUrlByShortUrl(String shortUrl) {
+    public UrlDto getOriginalUrl(String shortUrl) {
         log.info("Trying find url by shortUrl: " + shortUrl);
         return urlRepository
                 .getUrlByShortUrl(shortUrl)

@@ -1,7 +1,7 @@
 package com.piaskowy.urlshortenerbackend.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;

@@ -31,7 +31,7 @@ public class User {
     @Column(name = "is_enabled")
     private boolean isEnabled = false;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Url> urls;
 

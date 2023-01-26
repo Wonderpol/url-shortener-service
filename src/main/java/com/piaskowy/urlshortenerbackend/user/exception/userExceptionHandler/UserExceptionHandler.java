@@ -1,10 +1,10 @@
-package com.piaskowy.urlshortenerbackend.auth.exception.authExceptionHandler;
+package com.piaskowy.urlshortenerbackend.user.exception.userExceptionHandler;
 
-import com.piaskowy.urlshortenerbackend.auth.exception.ConfirmationTokenNotFoundException;
-import com.piaskowy.urlshortenerbackend.auth.exception.EmailIsAlreadyConfirmedException;
-import com.piaskowy.urlshortenerbackend.auth.exception.TokenExpiredException;
-import com.piaskowy.urlshortenerbackend.auth.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.auth.model.response.ErrorResponse;
+import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
+import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedException;
+import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
+import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,12 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class authExceptionHandler {
+public class UserExceptionHandler {
     @ExceptionHandler(value = {
             UserAlreadyExistsException.class,
             TokenExpiredException.class,
             EmailIsAlreadyConfirmedException.class,
-            ConfirmationTokenNotFoundException.class
+            ConfirmationTokenNotFoundException.class,
     })
     public ResponseEntity<Object> handleUserAuthExceptions(RuntimeException ex, WebRequest request) {
         String requestUri = ((ServletWebRequest) request).getRequest().getRequestURI();

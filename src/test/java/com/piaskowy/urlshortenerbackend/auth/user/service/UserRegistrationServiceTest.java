@@ -1,7 +1,7 @@
 package com.piaskowy.urlshortenerbackend.auth.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
 import com.piaskowy.urlshortenerbackend.user.service.UserRegistrationService;

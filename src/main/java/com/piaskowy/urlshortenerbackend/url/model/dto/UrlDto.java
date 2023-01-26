@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class UrlDto {
     private Long id;
-    private String url;
+    private String originalUrl;
     private String shortUrl;
     private LocalDateTime creationDate;
     private LocalDateTime lastVisited;

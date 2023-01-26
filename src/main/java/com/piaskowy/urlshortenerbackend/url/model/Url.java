@@ -21,7 +21,7 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Nonnull
-    private String url;
+    private String originalUrl;
     @Nonnull
     private String shortUrl;
     @Nonnull

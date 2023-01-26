@@ -1,12 +1,12 @@
 package com.piaskowy.urlshortenerbackend.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.exception.ConfirmationTokenNotFoundException;
-import com.piaskowy.urlshortenerbackend.auth.exception.EmailIsAlreadyConfirmedException;
-import com.piaskowy.urlshortenerbackend.auth.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.service.TokenService;
 import com.piaskowy.urlshortenerbackend.email.EmailService;
 import com.piaskowy.urlshortenerbackend.email.model.Email;
+import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
+import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedException;
+import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
