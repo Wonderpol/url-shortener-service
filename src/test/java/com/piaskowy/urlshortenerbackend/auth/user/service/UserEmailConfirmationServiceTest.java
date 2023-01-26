@@ -1,10 +1,11 @@
 package com.piaskowy.urlshortenerbackend.auth.user.service;
 
-import com.piaskowy.urlshortenerbackend.auth.exception.ConfirmationTokenNotFoundException;
-import com.piaskowy.urlshortenerbackend.auth.exception.EmailIsAlreadyConfirmedException;
-import com.piaskowy.urlshortenerbackend.auth.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.service.TokenService;
+import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
+import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedException;
+import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
+import com.piaskowy.urlshortenerbackend.user.service.UserEmailConfirmationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

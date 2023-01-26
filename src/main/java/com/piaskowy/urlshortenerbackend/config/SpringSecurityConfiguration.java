@@ -1,6 +1,7 @@
 package com.piaskowy.urlshortenerbackend.config;
 
-import com.piaskowy.urlshortenerbackend.auth.user.service.CustomUserDetailsService;
+import com.piaskowy.urlshortenerbackend.auth.jwt.JwtAuthenticationFilter;
+import com.piaskowy.urlshortenerbackend.user.service.CustomUserDetailsService;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,7 @@ public class SpringSecurityConfiguration {
                 .authorizeHttpRequests()
                 .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                 .requestMatchers(antMatcher("/api/v1/auth/**")).permitAll()
+                .requestMatchers(antMatcher("/api/v1/url/**")).permitAll()
                 .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                 .and()
                 .authorizeHttpRequests()
