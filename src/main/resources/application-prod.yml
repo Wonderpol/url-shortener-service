@@ -1,7 +1,7 @@
 config:
-  frontend-url: https://frontend.pl
+  frontend-url: FRONT_END_URL
   jwt:
-    secret-key: <SECRET_KEY>
+    secret-key: JWT_SECRET_KEY
 
 spring:
   datasource:
@@ -11,7 +11,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -21,8 +21,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: your@email.com
-    password: password
+    username: YOUR_EMAIL
+    password: YOUR_PASSWORD
     properties:
       mail:
         smtp:
