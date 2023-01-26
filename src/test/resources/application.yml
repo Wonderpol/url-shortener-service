@@ -5,19 +5,23 @@ config:
 
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/urlshortenerdb
-    username: admin
-    password: password
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:file:~/urlShortenerTestDatabase
+    username:
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      settings:
+        trace: false
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-        format_sql: false
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database: h2
   mail:
     host: smtp.gmail.com
     port: 587
@@ -32,3 +36,4 @@ spring:
         debug: true
         protocol: smtp
         test-connection: false
+
