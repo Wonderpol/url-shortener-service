@@ -10,6 +10,7 @@ import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,13 +21,16 @@ public class UrlService {
 
     private final UrlRepository urlRepository;
     private final UrlModelMapper mapper;
+    private final UrlConverterService urlConverterService;
 
-    public UrlService(final UrlRepository urlRepository, final UrlModelMapper mapper) {
+    public UrlService(final UrlRepository urlRepository, final UrlModelMapper mapper, final UrlConverterService urlConverterService) {
         this.urlRepository = urlRepository;
         this.mapper = mapper;
+        this.urlConverterService = urlConverterService;
     }
 
-    public Url addNewUrl(AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
+    @Transactional
+    public UrlDto addNewUrl(AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -37,13 +41,19 @@ public class UrlService {
                 .expireDate(addNewUrlRequest.getExpireDate())
                 .build();
 
-        return urlRepository.save(url);
+        url = urlRepository.save(url);
+        url.setShortUrl(urlConverterService.convertUrl(url.getId()));
+        
+        return mapper.toDto(urlRepository.save(url));
     }
 
     public UrlDto getOriginalUrl(String shortUrl) {
         log.info("Trying find url by shortUrl: " + shortUrl);
+
+        Long id = urlConverterService.getOriginalUrlId(shortUrl);
+
         return urlRepository
-                .getUrlByShortUrl(shortUrl)
+                .getUrlById(id)
                 .map(mapper::toDto)
                 .orElseThrow(() -> {
                     log.error("Short url: " + shortUrl + " not found");
