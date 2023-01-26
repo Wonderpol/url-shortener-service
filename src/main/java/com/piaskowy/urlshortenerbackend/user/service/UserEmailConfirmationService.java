@@ -2,6 +2,7 @@ package com.piaskowy.urlshortenerbackend.user.service;
 
 import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
 import com.piaskowy.urlshortenerbackend.auth.token.service.TokenService;
+import com.piaskowy.urlshortenerbackend.config.EnvironmentVariables;
 import com.piaskowy.urlshortenerbackend.email.EmailService;
 import com.piaskowy.urlshortenerbackend.email.model.Email;
 import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
@@ -24,10 +25,12 @@ import static com.piaskowy.urlshortenerbackend.auth.token.Utils.generateTokenFor
 public class UserEmailConfirmationService {
     private final TokenService tokenService;
     private final EmailService emailService;
+    private final EnvironmentVariables environmentVariables;
 
-    public UserEmailConfirmationService(final TokenService tokenService, final EmailService emailService) {
+    public UserEmailConfirmationService(final TokenService tokenService, final EmailService emailService, final EnvironmentVariables environmentVariables) {
         this.tokenService = tokenService;
         this.emailService = emailService;
+        this.environmentVariables = environmentVariables;
     }
 
     public Token generateAndSaveConfirmationToken(User user) {
@@ -61,12 +64,11 @@ public class UserEmailConfirmationService {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
-        //TODO: add baseUrl to application properties
-        properties.put("link", createConfirmationLink("http://localhost:8080", token));
+        properties.put("link", createConfirmationLink(environmentVariables.getFrontendUrl(), token));
 
         final Email email = Email.builder()
                 .to(user.getEmail())
-                .from("carrentalpo@gmail.com")
+                .from("test")
                 .subject("Confirm your email")
                 .properties(properties)
                 .template("email-confirm.html")
@@ -75,8 +77,8 @@ public class UserEmailConfirmationService {
         emailService.sendHtmlEmail(email);
     }
 
-    public String createConfirmationLink(String baseUrl, String token) {
-        return baseUrl + "/api/v1/auth/confirm-email?token=" + token;
+    public String createConfirmationLink(String frontendUrl, String token) {
+        return frontendUrl + "?token=" + token;
     }
 
 }

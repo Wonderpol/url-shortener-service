@@ -1,5 +1,6 @@
 package com.piaskowy.urlshortenerbackend.auth.service;
 
+import com.piaskowy.urlshortenerbackend.config.EnvironmentVariables;
 import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,9 +21,11 @@ import java.util.function.Function;
 @Log4j2
 public class JwtService {
 
-    //TODO: move it to configuration properites
-    private static final String SECRET_KEY = "6B5970337336763979244226452948404D635166546A576D5A7134743777217A";
+    private final EnvironmentVariables environmentVariables;
 
+    public JwtService(final EnvironmentVariables environmentVariables) {
+        this.environmentVariables = environmentVariables;
+    }
 
     public String extractEmail(String jwtToken) {
         return extractSingleClaim(jwtToken, Claims::getSubject);
@@ -71,7 +74,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(environmentVariables.getJwtSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
