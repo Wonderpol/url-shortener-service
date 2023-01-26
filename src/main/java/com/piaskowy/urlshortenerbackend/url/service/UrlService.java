@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -34,16 +34,21 @@ public class UrlService {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        log.info("Building url with details: " + addNewUrlRequest.toString());
+
         Url url = Url.builder()
                 .user(userDetails.user())
-                .creationDate(LocalDateTime.now())
+                .creationDate(Instant.now())
                 .originalUrl(addNewUrlRequest.getUrl())
                 .expireDate(addNewUrlRequest.getExpireDate())
                 .build();
 
         url = urlRepository.save(url);
+
+        log.info("Creating short url");
+
         url.setShortUrl(urlConverterService.convertUrl(url.getId()));
-        
+
         return mapper.toDto(urlRepository.save(url));
     }
 
