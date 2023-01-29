@@ -60,7 +60,7 @@ public class UserEmailConfirmationService {
     }
 
     @Async
-    public void sendAccountConfirmationEmail(String token, User user) throws MessagingException {
+    public void sendAccountConfirmationEmail(String token, User user) {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
@@ -74,7 +74,12 @@ public class UserEmailConfirmationService {
                 .template("email-confirm.html")
                 .build();
 
-        emailService.sendHtmlEmail(email);
+        try {
+            emailService.sendHtmlEmail(email);
+        } catch (MessagingException exception) {
+            log.error("Email not sent due to: " + exception.getMessage());
+            throw new RuntimeException("Email could not be sent");
+        }
     }
 
     public String createConfirmationLink(String frontendUrl, String token) {
