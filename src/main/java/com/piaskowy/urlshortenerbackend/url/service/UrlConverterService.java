@@ -15,7 +15,7 @@ public class UrlConverterService {
         this.environmentVariables = environmentVariables;
     }
 
-    public String convertUrl(Long id) {
+    public String getShortUrl(Long id) {
         String shortUrl = encode(id);
 
         return environmentVariables.getFrontendUrl() + "/" + shortUrl;

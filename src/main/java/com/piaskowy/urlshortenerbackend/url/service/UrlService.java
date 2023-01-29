@@ -47,7 +47,7 @@ public class UrlService {
 
         log.info("Creating short url");
 
-        url.setShortUrl(urlConverterService.convertUrl(url.getId()));
+        url.setShortUrl(urlConverterService.getShortUrl(url.getId()));
 
         return mapper.toDto(urlRepository.save(url));
     }
