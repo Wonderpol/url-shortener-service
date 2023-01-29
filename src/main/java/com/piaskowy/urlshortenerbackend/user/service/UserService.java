@@ -10,14 +10,13 @@ import com.piaskowy.urlshortenerbackend.user.model.dto.UserDto;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.model.mapper.UserModelMapper;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
-import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Log4j2
@@ -38,12 +37,12 @@ public class UserService {
         this.mapper = userModelMapper;
     }
 
-    public UserDto registerUser(RegisterRequest registerRequest) throws MessagingException {
+    @Transactional
+    public void registerUser(RegisterRequest registerRequest) {
         log.info("User registration procedure started with given details: " + registerRequest.toString());
         User user = userRegistrationService.signUpNewUser(registerRequest);
         Token token = userEmailConfirmationService.generateAndSaveConfirmationToken(user);
         userEmailConfirmationService.sendAccountConfirmationEmail(token.getGeneratedToken(), user);
-        return mapper.toDto(user);
     }
 
     public AuthenticationResponse authenticateUser(AuthenticationRequest request) {
