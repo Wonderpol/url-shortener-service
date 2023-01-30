@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 
@@ -22,11 +23,13 @@ public class UrlService {
     private final UrlRepository urlRepository;
     private final UrlModelMapper mapper;
     private final UrlConverterService urlConverterService;
+    private final UrlValidationService urlValidationService;
 
-    public UrlService(final UrlRepository urlRepository, final UrlModelMapper mapper, final UrlConverterService urlConverterService) {
+    public UrlService(final UrlRepository urlRepository, final UrlModelMapper mapper, final UrlConverterService urlConverterService, final UrlValidationService urlValidationService) {
         this.urlRepository = urlRepository;
         this.mapper = mapper;
         this.urlConverterService = urlConverterService;
+        this.urlValidationService = urlValidationService;
     }
 
     @Transactional
@@ -64,6 +67,14 @@ public class UrlService {
                     log.error("Short url: " + shortUrl + " not found");
                     return new UrlNotFoundException("Url: " + shortUrl + " not found");
                 });
+    }
+
+    public URI getRedirectUri(String shortUrl) {
+        UrlDto url = getOriginalUrl(shortUrl);
+
+        urlValidationService.validateUrl(url);
+
+        return URI.create(url.getOriginalUrl());
     }
 
     public List<UrlDto> getAllUrls() {

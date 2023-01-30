@@ -12,6 +12,7 @@ public class UrlDto {
     private String shortUrl;
     private Instant creationDate;
     private Instant lastVisited;
+    private boolean isEnabled;
     private Instant expireDate;
     private UserDto user;
 }

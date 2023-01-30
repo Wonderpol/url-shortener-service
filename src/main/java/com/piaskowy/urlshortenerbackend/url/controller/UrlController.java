@@ -3,9 +3,12 @@ package com.piaskowy.urlshortenerbackend.url.controller;
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
 import com.piaskowy.urlshortenerbackend.url.service.UrlService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,5 +39,11 @@ public class UrlController {
     @GetMapping(params = "userId")
     public List<UrlDto> getAllUserUrls(@RequestParam Long userId) {
         return urlService.getAllUserUrls(userId);
+    }
+
+    @GetMapping(value = "/redirect/{shortUrl}")
+    public ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
+        URI redirectUri = urlService.getRedirectUri(shortUrl);
+        return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
     }
 }
