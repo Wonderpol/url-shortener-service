@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.service;
+package com.piaskowy.urlshortenerbackend.config.jwt;
 
 import com.piaskowy.urlshortenerbackend.config.EnvironmentVariables;
 import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;

@@ -15,14 +15,14 @@ public class UrlValidationService {
 
         if (url.getExpireDate() != null) {
             if (Instant.now().isAfter(url.getExpireDate())) {
-                log.error("Url: " + url + " expired");
-                throw new UrlException("Url: " + url + " expired");
+                log.error("Url: " + url.getShortUrl() + " expired");
+                throw new UrlException("Url: " + url.getShortUrl() + " expired");
             }
         }
 
-        if (!url.isEnabled()) {
-            log.error("Url: " + url + " is disabled by author");
-            throw new UrlException("Url: " + url + " is disabled by author");
+        if (url.isDisabled()) {
+            log.error("Url: " + url.getShortUrl() + " is disabled by author");
+            throw new UrlException("Url: " + url.getShortUrl() + " is disabled by author");
         }
     }
 }

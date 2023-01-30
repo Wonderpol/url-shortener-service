@@ -1,6 +1,7 @@
 package com.piaskowy.urlshortenerbackend.url.exception.urlExceptionHandler;
 
 import com.piaskowy.urlshortenerbackend.auth.model.response.ErrorResponse;
+import com.piaskowy.urlshortenerbackend.url.exception.UrlException;
 import com.piaskowy.urlshortenerbackend.url.exception.UrlNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,19 @@ public class UrlExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(exceptionMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {
+            UrlException.class
+    })
+    public ResponseEntity<Object> handleUrlException(RuntimeException ex, WebRequest request) {
+        String requestUri = ((ServletWebRequest) request).getRequest().getRequestURI();
+        ErrorResponse exceptionMessage = ErrorResponse.builder()
+                .message(ex.getMessage())
+                .path(requestUri)
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(exceptionMessage, HttpStatus.FORBIDDEN);
     }
 
 }

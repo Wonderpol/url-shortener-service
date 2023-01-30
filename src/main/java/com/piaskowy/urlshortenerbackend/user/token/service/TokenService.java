@@ -1,7 +1,7 @@
-package com.piaskowy.urlshortenerbackend.auth.token.service;
+package com.piaskowy.urlshortenerbackend.user.token.service;
 
-import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
-import com.piaskowy.urlshortenerbackend.auth.token.repository.TokenRepository;
+import com.piaskowy.urlshortenerbackend.user.token.model.Token;
+import com.piaskowy.urlshortenerbackend.user.token.repository.TokenRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
