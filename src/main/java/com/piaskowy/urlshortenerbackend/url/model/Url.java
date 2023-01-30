@@ -28,7 +28,7 @@ public class Url {
     private Instant creationDate;
     private Instant lastVisited;
     private Instant expireDate;
-    private boolean isEnabled;
+    private boolean isDisabled;
     @ManyToOne
     private User user;
 

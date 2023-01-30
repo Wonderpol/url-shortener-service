@@ -5,6 +5,7 @@ import com.piaskowy.urlshortenerbackend.url.model.Url;
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.mapper.UrlModelMapper;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
+import com.piaskowy.urlshortenerbackend.url.model.response.ShortUrlResponse;
 import com.piaskowy.urlshortenerbackend.url.repository.UrlRepository;
 import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import lombok.extern.log4j.Log4j2;
@@ -33,7 +34,7 @@ public class UrlService {
     }
 
     @Transactional
-    public UrlDto addNewUrl(AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
+    public ShortUrlResponse addNewUrl(AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -52,7 +53,9 @@ public class UrlService {
 
         url.setShortUrl(urlConverterService.getShortUrl(url.getId()));
 
-        return mapper.toDto(urlRepository.save(url));
+        url = urlRepository.save(url);
+
+        return new ShortUrlResponse(url.getShortUrl());
     }
 
     public UrlDto getOriginalUrl(String shortUrl) {

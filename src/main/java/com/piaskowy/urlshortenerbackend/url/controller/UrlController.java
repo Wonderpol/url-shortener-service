@@ -2,7 +2,9 @@ package com.piaskowy.urlshortenerbackend.url.controller;
 
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
+import com.piaskowy.urlshortenerbackend.url.model.response.ShortUrlResponse;
 import com.piaskowy.urlshortenerbackend.url.service.UrlService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,7 +24,7 @@ public class UrlController {
     }
 
     @PostMapping
-    public UrlDto convertUrl(@RequestBody AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
+    public ShortUrlResponse convertUrl(@Valid @RequestBody AddNewUrlRequest addNewUrlRequest, Authentication authentication) {
         return urlService.addNewUrl(addNewUrlRequest, authentication);
     }
 
@@ -44,6 +46,6 @@ public class UrlController {
     @GetMapping(value = "/redirect/{shortUrl}")
     public ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
         URI redirectUri = urlService.getRedirectUri(shortUrl);
-        return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
+        return ResponseEntity.status(HttpStatus.SEE_OTHER).location(redirectUri).build();
     }
 }

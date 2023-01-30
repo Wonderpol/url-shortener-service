@@ -1,6 +1,6 @@
-package com.piaskowy.urlshortenerbackend.auth.token.repository;
+package com.piaskowy.urlshortenerbackend.user.token.repository;
 
-import com.piaskowy.urlshortenerbackend.auth.token.model.entity.Token;
+import com.piaskowy.urlshortenerbackend.user.token.model.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.auth.token.model.entity;
+package com.piaskowy.urlshortenerbackend.user.token.model;
 
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import jakarta.persistence.*;

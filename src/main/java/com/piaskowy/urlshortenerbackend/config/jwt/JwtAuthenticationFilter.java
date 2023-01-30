@@ -1,8 +1,7 @@
-package com.piaskowy.urlshortenerbackend.auth.jwt;
+package com.piaskowy.urlshortenerbackend.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piaskowy.urlshortenerbackend.auth.model.response.ErrorResponse;
-import com.piaskowy.urlshortenerbackend.auth.service.JwtService;
 import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.user.service.CustomUserDetailsService;
 import io.jsonwebtoken.JwtException;
