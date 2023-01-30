@@ -36,7 +36,7 @@ public class SpringSecurityConfiguration {
                 .authorizeHttpRequests()
                 .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                 .requestMatchers(antMatcher("/api/v1/auth/**")).permitAll()
-                .requestMatchers(antMatcher("/api/v1/url/**")).permitAll()
+                .requestMatchers("/api/v1/urls/redirect/{shortUrl}").permitAll()
                 .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                 .and()
                 .authorizeHttpRequests()
