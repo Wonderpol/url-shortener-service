@@ -23,6 +23,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info("Trying to load user with provided email: " + email);
         return userRepository.findByEmail(email)
                 .map(CustomUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
+                .orElseThrow(() -> {
+                    log.error("User with email: " + email + " not found");
+                    throw new UsernameNotFoundException("User with email: " + email + " not found");
+                });
     }
 }
