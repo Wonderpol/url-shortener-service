@@ -1,4 +1,6 @@
 package com.piaskowy.urlshortenerbackend.auth.model.request;
 
-public record ResetPasswordRequest(String email) {
+import jakarta.validation.constraints.NotBlank;
+
+public record ResetPasswordRequest(@NotBlank String email) {
 }
