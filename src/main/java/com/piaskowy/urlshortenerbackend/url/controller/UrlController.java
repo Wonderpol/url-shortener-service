@@ -48,4 +48,11 @@ public class UrlController {
         URI redirectUri = urlService.getRedirectUri(shortUrl);
         return ResponseEntity.status(HttpStatus.SEE_OTHER).location(redirectUri).build();
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLink(@PathVariable Long id) {
+        urlService.deleteLinkById(id);
+    }
+
 }

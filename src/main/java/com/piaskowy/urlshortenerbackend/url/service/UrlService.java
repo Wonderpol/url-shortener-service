@@ -96,4 +96,8 @@ public class UrlService {
                 .toList();
     }
 
+    public void deleteLinkById(Long linkId) {
+        urlRepository.deleteById(linkId);
+    }
+
 }
