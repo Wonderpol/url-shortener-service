@@ -2,11 +2,10 @@ package com.piaskowy.urlshortenerbackend.auth.controller;
 
 import com.piaskowy.urlshortenerbackend.auth.model.request.AuthenticationRequest;
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.model.request.ResetPasswordRequest;
 import com.piaskowy.urlshortenerbackend.auth.model.response.AuthenticationResponse;
 import com.piaskowy.urlshortenerbackend.user.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +24,8 @@ public class AuthController {
     }
 
     @PostMapping("authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
-        return new ResponseEntity<>(userService.authenticateUser(authenticationRequest), HttpStatus.OK);
+    public AuthenticationResponse authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+        return userService.authenticateUser(authenticationRequest);
     }
 
     @GetMapping("confirm-email")
@@ -34,4 +33,8 @@ public class AuthController {
         userService.confirmUserEmail(token);
     }
 
+    @GetMapping("request-reset-password")
+    public void resetPassword(@RequestBody ResetPasswordRequest request) {
+
+    }
 }

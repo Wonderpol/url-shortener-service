@@ -23,6 +23,8 @@ public class Token {
     @NonNull
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
+    @NonNull
+    private TokenType tokenType;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "user_id")

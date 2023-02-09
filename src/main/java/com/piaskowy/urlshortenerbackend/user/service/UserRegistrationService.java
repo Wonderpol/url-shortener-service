@@ -22,17 +22,17 @@ public class UserRegistrationService {
 
     public User signUpNewUser(RegisterRequest registerRequest) {
 
-        log.info("Checking if user with email " + registerRequest.getEmail() + " already exists");
-        userRepository.findByEmail(registerRequest.getEmail())
+        log.info("Checking if user with email " + registerRequest.email() + " already exists");
+        userRepository.findByEmail(registerRequest.email())
                 .ifPresent(u -> {
-                    throw new UserAlreadyExistsException("User with email: " + registerRequest.getEmail() + " already exists");
+                    throw new UserAlreadyExistsException("User with email: " + registerRequest.email() + " already exists");
                 });
 
         User user = User.builder()
-                .name(registerRequest.getName())
-                .lastName(registerRequest.getLastName())
-                .email(registerRequest.getEmail())
-                .password(registerRequest.getPassword())
+                .name(registerRequest.name())
+                .lastName(registerRequest.lastName())
+                .email(registerRequest.email())
+                .password(registerRequest.password())
                 .build();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
