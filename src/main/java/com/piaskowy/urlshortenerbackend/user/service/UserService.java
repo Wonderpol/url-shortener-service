@@ -49,13 +49,13 @@ public class UserService {
         log.info("User authentication procedure started with given details: " + request.toString());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword())
+                        request.email(),
+                        request.password())
         );
         String jwtToken = userRepository
-                .findByEmail(request.getEmail())
+                .findByEmail(request.email())
                 .map(u -> jwtService.generateToken(new CustomUserDetails(u)))
-                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + request.getEmail() + " not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + request.email() + " not found"));
 
         return AuthenticationResponse.builder().token(jwtToken).build();
     }

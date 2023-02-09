@@ -8,6 +8,7 @@ import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedEx
 import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.token.model.Token;
+import com.piaskowy.urlshortenerbackend.user.token.model.TokenType;
 import com.piaskowy.urlshortenerbackend.user.token.service.TokenService;
 import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
@@ -34,7 +35,7 @@ public class UserEmailConfirmationService {
     }
 
     public Token generateAndSaveConfirmationToken(User user) {
-        Token emailConfirmationToken = generateTokenForUser(user);
+        Token emailConfirmationToken = generateTokenForUser(user, TokenType.EMAIL_CONFIRM_TOKEN);
         return tokenService.saveGeneratedToken(emailConfirmationToken);
     }
 
@@ -42,6 +43,7 @@ public class UserEmailConfirmationService {
 
         Token confirmationToken = tokenService
                 .getToken(token)
+                .filter(t -> t.getTokenType() == TokenType.EMAIL_CONFIRM_TOKEN)
                 .orElseThrow(() -> new ConfirmationTokenNotFoundException("Token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {

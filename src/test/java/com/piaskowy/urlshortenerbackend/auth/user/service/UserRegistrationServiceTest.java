@@ -42,7 +42,7 @@ class UserRegistrationServiceTest {
         //then
         assertThatThrownBy(() -> userRegistrationService.signUpNewUser(registerRequest))
                 .isInstanceOf(UserAlreadyExistsException.class)
-                .hasMessageContaining("User with email: " + registerRequest.getEmail() + " already exists");
+                .hasMessageContaining("User with email: " + registerRequest.email() + " already exists");
     }
 
     @Test
@@ -66,7 +66,7 @@ class UserRegistrationServiceTest {
 
         final User capturedValue = userArgumentCaptor.getValue();
 
-        assertThat(registerRequest.getEmail()).isEqualTo(capturedValue.getEmail());
+        assertThat(registerRequest.email()).isEqualTo(capturedValue.getEmail());
         assertThat("encoded_password").isEqualTo(capturedValue.getPassword());
     }
 
