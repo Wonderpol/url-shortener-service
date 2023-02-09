@@ -4,12 +4,12 @@ import com.piaskowy.urlshortenerbackend.auth.model.request.AuthenticationRequest
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.model.response.AuthenticationResponse;
 import com.piaskowy.urlshortenerbackend.config.jwt.JwtService;
+import com.piaskowy.urlshortenerbackend.token.model.Token;
 import com.piaskowy.urlshortenerbackend.user.model.CustomUserDetails;
 import com.piaskowy.urlshortenerbackend.user.model.dto.UserDto;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.model.mapper.UserModelMapper;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
-import com.piaskowy.urlshortenerbackend.user.token.model.Token;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

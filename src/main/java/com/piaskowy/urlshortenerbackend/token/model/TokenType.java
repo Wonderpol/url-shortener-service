@@ -1,4 +1,4 @@
-package com.piaskowy.urlshortenerbackend.user.token.model;
+package com.piaskowy.urlshortenerbackend.token.model;
 
 public enum TokenType {
     EMAIL_CONFIRM_TOKEN,

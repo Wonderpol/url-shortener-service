@@ -1,8 +1,8 @@
-package com.piaskowy.urlshortenerbackend.user.token;
+package com.piaskowy.urlshortenerbackend.token;
 
+import com.piaskowy.urlshortenerbackend.token.model.Token;
+import com.piaskowy.urlshortenerbackend.token.model.TokenType;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
-import com.piaskowy.urlshortenerbackend.user.token.model.Token;
-import com.piaskowy.urlshortenerbackend.user.token.model.TokenType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
