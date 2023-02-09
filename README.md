@@ -19,7 +19,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#Usage - available endpoints">Usage - available endpoints</a></li>
+    <li><a href="#Usage">Usage</a></li>
     <li><a href="#TODO">TODO</a></li>
   </ol>
 </details>
@@ -135,7 +135,7 @@ Now if everything went well the application will be available at: `localhost:808
 
 <!-- USAGE EXAMPLES -->
 
-## Usage - available endpoints
+## Usage
 
 All the available endpoints are listed below:
 
