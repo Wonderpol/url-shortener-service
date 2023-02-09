@@ -3,13 +3,13 @@ package com.piaskowy.urlshortenerbackend.user.service;
 import com.piaskowy.urlshortenerbackend.config.EnvironmentVariables;
 import com.piaskowy.urlshortenerbackend.email.EmailService;
 import com.piaskowy.urlshortenerbackend.email.model.Email;
+import com.piaskowy.urlshortenerbackend.token.model.Token;
+import com.piaskowy.urlshortenerbackend.token.model.TokenType;
+import com.piaskowy.urlshortenerbackend.token.service.TokenService;
 import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
 import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedException;
 import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
-import com.piaskowy.urlshortenerbackend.user.token.model.Token;
-import com.piaskowy.urlshortenerbackend.user.token.model.TokenType;
-import com.piaskowy.urlshortenerbackend.user.token.service.TokenService;
 import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Async;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.piaskowy.urlshortenerbackend.user.token.Utils.generateTokenForUser;
+import static com.piaskowy.urlshortenerbackend.token.Utils.generateTokenForUser;
 
 @Service
 @Log4j2

@@ -13,16 +13,16 @@ public class UrlValidationService {
 
     public void validateUrl(UrlDto url) {
 
-        if (url.getExpireDate() != null) {
-            if (Instant.now().isAfter(url.getExpireDate())) {
-                log.error("Url: " + url.getShortUrl() + " expired");
-                throw new UrlException("Url: " + url.getShortUrl() + " expired");
+        if (url.expireDate() != null) {
+            if (Instant.now().isAfter(url.expireDate())) {
+                log.error("Url: " + url.shortUrl() + " expired");
+                throw new UrlException("Url: " + url.shortUrl() + " expired");
             }
         }
 
         if (url.isDisabled()) {
-            log.error("Url: " + url.getShortUrl() + " is disabled by author");
-            throw new UrlException("Url: " + url.getShortUrl() + " is disabled by author");
+            log.error("Url: " + url.shortUrl() + " is disabled by author");
+            throw new UrlException("Url: " + url.shortUrl() + " is disabled by author");
         }
     }
 }

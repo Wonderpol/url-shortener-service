@@ -35,6 +35,6 @@ public class AuthController {
 
     @GetMapping("request-reset-password")
     public void resetPassword(@RequestBody ResetPasswordRequest request) {
-
+        //TODO: send reset-password email
     }
 }

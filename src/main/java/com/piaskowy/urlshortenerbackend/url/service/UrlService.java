@@ -77,7 +77,7 @@ public class UrlService {
 
         urlValidationService.validateUrl(url);
 
-        return URI.create(url.getOriginalUrl());
+        return URI.create(url.originalUrl());
     }
 
     public List<UrlDto> getAllUrls() {

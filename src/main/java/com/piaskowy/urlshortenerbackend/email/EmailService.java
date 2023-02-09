@@ -28,14 +28,14 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Context context = new Context();
-        context.setVariables(email.getProperties());
-        helper.setFrom(email.getFrom());
-        helper.setTo(email.getTo());
-        helper.setSubject(email.getSubject());
-        String html = springTemplateEngine.process(email.getTemplate(), context);
+        context.setVariables(email.properties());
+        helper.setFrom(email.from());
+        helper.setTo(email.to());
+        helper.setSubject(email.subject());
+        String html = springTemplateEngine.process(email.template(), context);
         helper.setText(html, true);
 
-        log.info("Sending email to: " + email.getTo());
+        log.info("Sending email to: " + email.to());
 
         mailSender.send(message);
     }
