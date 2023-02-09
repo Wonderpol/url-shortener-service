@@ -19,7 +19,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#Usage - available endpoints">Usage</a></li>
+    <li><a href="#Usage - available endpoints">Usage - available endpoints</a></li>
     <li><a href="#TODO">TODO</a></li>
   </ol>
 </details>
@@ -30,9 +30,9 @@
 
 ## About The Project
 
-Server layer of an application that gives and opportunity to shorten url.
+Server layer of an application that gives an opportunity to shorten url.
 The application solves problem with long unreadable links.
-In the next step it will allow to collect statistics about shorten link
+In the next step of development process it will allow to collect statistics about shorten link.
 
 Here's why:
 
