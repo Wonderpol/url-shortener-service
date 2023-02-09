@@ -1,18 +1,5 @@
 <a name="readme-top"></a>
 
-[//]: # ([![Contributors][contributors-shield]][contributors-url])
-
-[//]: # ([![Forks][forks-shield]][forks-url])
-
-[//]: # ([![Stargazers][stars-shield]][stars-url])
-
-[//]: # ([![Issues][issues-shield]][issues-url])
-
-[//]: # ([![MIT License][license-shield]][license-url])
-
-[//]: # ([![LinkedIn][linkedin-shield]][linkedin-url])
-
-
 <h3 align="center">Url shortener backend service</h3>
 
 <!-- TABLE OF CONTENTS -->
@@ -32,11 +19,8 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#Usage - available endpoints">Usage</a></li>
+    <li><a href="#TODO">TODO</a></li>
   </ol>
 </details>
 
@@ -90,7 +74,7 @@ To setup and run the project follow instructions below.
 ### Installation
 
 1. Clone the repo
-   ```sh
+   ```shell
    git clone https://github.com/Wonderpol/url-shortener-service.git
    ```
 2. Open the following file: `src/main/resources/application-prod.yml`
@@ -102,43 +86,49 @@ To setup and run the project follow instructions below.
    using [Allkeysgenerator](https://www.allkeysgenerator.com).
    In the mail section provide your SMTP provider, email, and password.
 
-```yaml
-config:
-  frontend-url: FRONT_END_URL
-  jwt:
-    secret-key: JWT_SECRET_KEY
-
-spring:
-  datasource:
-    url: jdbc:postgresql://db:5432/urlshortenerdb
-    username: admin
-    password: password
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: false
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: YOUR_EMAIL
-    password: YOUR_PASSWORD
-    properties:
+    ```yaml
+    config:
+      frontend-url: FRONT_END_URL
+      jwt:
+        secret-key: JWT_SECRET_KEY
+    
+    spring:
+      datasource:
+        url: jdbc:postgresql://db:5432/urlshortenerdb
+        username: admin
+        password: password
+        driver-class-name: org.postgresql.Driver
+      jpa:
+        hibernate:
+          ddl-auto: update
+        show-sql: true
+        properties:
+          hibernate:
+            format_sql: false
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
       mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-        debug: true
-        protocol: smtp
-        test-connection: false
-```
+        host: smtp.gmail.com
+        port: 587
+        username: YOUR_EMAIL
+        password: YOUR_PASSWORD
+        properties:
+          mail:
+            smtp:
+              auth: true
+              starttls:
+                enable: true
+            debug: true
+            protocol: smtp
+            test-connection: false
+     ```
 
+4. Now within the root folder open terminal and type:
+    ```shell
+    docker-compose up
+    ```
+
+Now if everything went well the application will be available at: `localhost:8080`
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -174,7 +164,7 @@ All the available endpoints are listed below:
 
 
 
-<!-- ROADMAP -->
+<!-- TODO -->
 
 ## TODO
 
