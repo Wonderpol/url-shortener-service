@@ -1,10 +1,10 @@
-package com.piaskowy.urlshortenerbackend.auth.user.service;
+package com.piaskowy.urlshortenerbackend.auth;
 
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
+import com.piaskowy.urlshortenerbackend.auth.service.UserRegistrationService;
 import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
-import com.piaskowy.urlshortenerbackend.user.service.UserRegistrationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UserRegistrationServiceTest {
+class RegistrationServiceTest {
 
     @InjectMocks
     UserRegistrationService userRegistrationService;

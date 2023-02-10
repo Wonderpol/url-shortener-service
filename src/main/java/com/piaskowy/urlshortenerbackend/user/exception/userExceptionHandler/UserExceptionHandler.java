@@ -1,9 +1,6 @@
 package com.piaskowy.urlshortenerbackend.user.exception.userExceptionHandler;
 
 import com.piaskowy.urlshortenerbackend.global.BaseExceptionHandler;
-import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
-import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedException;
-import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
 import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +14,6 @@ public class UserExceptionHandler extends BaseExceptionHandler {
 
     @ExceptionHandler(value = {
             UserAlreadyExistsException.class,
-            TokenExpiredException.class,
-            EmailIsAlreadyConfirmedException.class,
-            ConfirmationTokenNotFoundException.class,
             UsernameNotFoundException.class
     })
     @Override

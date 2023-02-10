@@ -2,6 +2,7 @@ package com.piaskowy.urlshortenerbackend.url.controller;
 
 import com.piaskowy.urlshortenerbackend.url.model.dto.UrlDto;
 import com.piaskowy.urlshortenerbackend.url.model.request.AddNewUrlRequest;
+import com.piaskowy.urlshortenerbackend.url.model.request.UpdateOriginalUrlRequest;
 import com.piaskowy.urlshortenerbackend.url.model.response.ShortUrlResponse;
 import com.piaskowy.urlshortenerbackend.url.service.UrlService;
 import jakarta.validation.Valid;
@@ -48,4 +49,16 @@ public class UrlController {
         URI redirectUri = urlService.getRedirectUri(shortUrl);
         return ResponseEntity.status(HttpStatus.SEE_OTHER).location(redirectUri).build();
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLink(@PathVariable Long id) {
+        urlService.deleteLinkById(id);
+    }
+
+    @PutMapping("{id}")
+    public void updateOriginalLink(@PathVariable Long id, @RequestBody UpdateOriginalUrlRequest request) {
+        urlService.updateOriginalLink(id, request.originalUrl());
+    }
+
 }

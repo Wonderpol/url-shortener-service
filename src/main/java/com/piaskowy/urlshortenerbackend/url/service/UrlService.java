@@ -43,8 +43,8 @@ public class UrlService {
         Url url = Url.builder()
                 .user(userDetails.user())
                 .creationDate(Instant.now())
-                .originalUrl(addNewUrlRequest.getUrl())
-                .expireDate(addNewUrlRequest.getExpireDate())
+                .originalUrl(addNewUrlRequest.url())
+                .expireDate(addNewUrlRequest.expireDate())
                 .build();
 
         url = urlRepository.save(url);
@@ -62,7 +62,6 @@ public class UrlService {
         log.info("Trying find url by shortUrl: " + shortUrl);
 
         Long id = urlConverterService.getOriginalUrlId(shortUrl);
-
         return urlRepository
                 .getUrlById(id)
                 .map(mapper::toDto)
@@ -77,7 +76,7 @@ public class UrlService {
 
         urlValidationService.validateUrl(url);
 
-        return URI.create(url.originalUrl());
+        return URI.create(url.getOriginalUrl());
     }
 
     public List<UrlDto> getAllUrls() {
@@ -94,6 +93,15 @@ public class UrlService {
                 .stream()
                 .map(mapper::toDto)
                 .toList();
+    }
+
+    public void updateOriginalLink(Long urlId, String newLink) {
+        log.info("Trying to update link: " + urlId + " with url " + newLink);
+        urlRepository.updateUrlOriginalUrlWhereUrlId(urlId, newLink);
+    }
+
+    public void deleteLinkById(Long linkId) {
+        urlRepository.deleteById(linkId);
     }
 
 }

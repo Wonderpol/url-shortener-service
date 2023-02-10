@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 public class EnvironmentVariables {
     @Value("${config.frontend-url}")
     private String frontendUrl;
-
     @Value("${config.jwt.secret-key}")
     private String jwtSecretKey;
-
+    @Value("${config.email-template.confirm-email}")
+    private String confirmEmailTemplateName;
 }
