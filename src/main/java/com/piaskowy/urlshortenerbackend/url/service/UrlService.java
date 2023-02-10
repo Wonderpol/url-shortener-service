@@ -95,7 +95,7 @@ public class UrlService {
                 .toList();
     }
 
-    public void updateOriginalLink(String newLink, Long urlId) {
+    public void updateOriginalLink(Long urlId, String newLink) {
         log.info("Trying to update link: " + urlId + " with url " + newLink);
         urlRepository.updateUrlOriginalUrlWhereUrlId(urlId, newLink);
     }

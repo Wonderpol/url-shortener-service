@@ -38,7 +38,7 @@ Here's why:
 
 * Some users are scared of long links
 * Easy link management
-* Keep track of link statistics
+* Keep track of link traffic
 
 The project is still in development due to that some features may not be available.
 
@@ -122,7 +122,6 @@ To setup and run the project follow instructions below.
             protocol: smtp
             test-connection: false
      ```
-
 4. Now within the root folder open terminal and type:
     ```shell
     docker-compose up
@@ -136,6 +135,9 @@ Now if everything went well the application will be available at: `localhost:808
 <!-- USAGE EXAMPLES -->
 
 ## Usage
+
+Email template customization: feel free to customize emails templates that are sent to users.
+Go to `src/main/resources/templates`, open and edit html template.
 
 All the available endpoints are listed below:
 

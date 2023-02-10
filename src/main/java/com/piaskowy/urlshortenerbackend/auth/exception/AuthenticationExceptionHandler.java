@@ -18,4 +18,12 @@ public class AuthenticationExceptionHandler extends BaseExceptionHandler {
     public ResponseEntity<Object> handleForbiddenExceptions(final RuntimeException ex, final WebRequest request) {
         return super.handleForbiddenExceptions(ex, request);
     }
+
+    @ExceptionHandler(value = {
+            AuthenticationNotFoundException.class
+    })
+    @Override
+    public ResponseEntity<Object> handleNotFoundExceptions(final RuntimeException ex, final WebRequest request) {
+        return super.handleNotFoundExceptions(ex, request);
+    }
 }

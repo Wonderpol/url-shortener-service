@@ -1,11 +1,11 @@
-package com.piaskowy.urlshortenerbackend.auth.user.service;
+package com.piaskowy.urlshortenerbackend.auth;
 
+import com.piaskowy.urlshortenerbackend.auth.service.AuthEmailService;
 import com.piaskowy.urlshortenerbackend.token.model.Token;
 import com.piaskowy.urlshortenerbackend.token.service.TokenService;
 import com.piaskowy.urlshortenerbackend.user.exception.ConfirmationTokenNotFoundException;
 import com.piaskowy.urlshortenerbackend.user.exception.EmailIsAlreadyConfirmedException;
 import com.piaskowy.urlshortenerbackend.user.exception.TokenExpiredException;
-import com.piaskowy.urlshortenerbackend.user.service.UserEmailConfirmationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -23,12 +23,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UserEmailConfirmationServiceTest {
+class EmailConfirmationServiceTest {
 
     @Mock
     private TokenService tokenService;
     @InjectMocks
-    private UserEmailConfirmationService userEmailConfirmationService;
+    private AuthEmailService userEmailConfirmationService;
 
     @Test
     void test_validateEmailConfirmationToken() {
