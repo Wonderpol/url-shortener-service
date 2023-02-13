@@ -175,7 +175,6 @@ All the available endpoints are listed below:
 - [ ] Add link statistics
 - [ ] Add admin role
 - [ ] Add notification 30 days before link expire
-- [ ] Add link to advert that will be shown before link redirect
 - [ ] Multi-language Email Support
     - [ ] Polish
 
