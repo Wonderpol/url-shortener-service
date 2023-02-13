@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,17 +27,22 @@ public class AuthService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final PasswordResetService passwordResetService;
+    private final PasswordEncoder passwordEncoder;
+
 
     public AuthService(final UserRegistrationService userRegistrationService,
                        final AuthEmailService userEmailConfirmationService,
                        final AuthenticationManager authenticationManager,
-                       final JwtService jwtService, final UserRepository userRepository, final TokenService tokenService) {
+                       final JwtService jwtService, final UserRepository userRepository, final TokenService tokenService, final PasswordResetService passwordResetService, final PasswordEncoder passwordEncoder) {
         this.userRegistrationService = userRegistrationService;
         this.userEmailConfirmationService = userEmailConfirmationService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.tokenService = tokenService;
+        this.passwordResetService = passwordResetService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -72,8 +78,23 @@ public class AuthService {
         userRepository.enableUserAccount(user.getEmail());
     }
 
-    public void requestResetPassword(String email) {
-        //TODO: reset user password
+    public void requestPasswordResetEmail(String email) {
+        log.info("User with email: " + email + " requested password reset");
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
+
+        Token token = tokenService.generateAndSaveToken(user, TokenType.EMAIL_CONFIRM_TOKEN);
+        passwordResetService.sendPasswordResetEmail(token.getGeneratedToken(), user);
     }
 
+    @Transactional
+    public void resetPassword(String tokenString, String newPassword) {
+        log.info("Reset password procedure started with token: " + tokenString);
+        Token token = tokenService.getToken(tokenString);
+        User user = token.getUser();
+        tokenService.validateToken(token);
+        tokenService.setConfirmationDate(tokenString);
+        userRepository.updateUserPassword(passwordEncoder.encode(newPassword), user.getId());
+    }
 }
