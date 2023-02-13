@@ -39,7 +39,7 @@ public class TokenService {
 
     public void validateToken(Token token) {
 
-        if (token.getConfirmedAt() != null) {
+        if (token.getUsedAt() != null) {
             log.error("Token: " + token + " has been already used");
             throw new TokenException("Token with id: " + token.getId() + " has been already used");
         }

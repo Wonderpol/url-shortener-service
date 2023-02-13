@@ -28,7 +28,7 @@ public class PasswordResetService {
     public void sendPasswordResetEmail(String token, User user) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
-        properties.put("link", createConfirmEmailLink(environmentVariables.getFrontendUrl(), token));
+        properties.put("link", createResetPasswordLink(environmentVariables.getFrontendUrl(), token));
 
         final Email email = Email.builder()
                 .to(user.getEmail())
@@ -46,8 +46,7 @@ public class PasswordResetService {
         }
     }
 
-    public String createConfirmEmailLink(String frontendUrl, String token) {
-        //TODO: extract "/reset-password" to env variable
-        return frontendUrl + "/reset-password?token=" + token;
+    public String createResetPasswordLink(String frontendUrl, String token) {
+        return frontendUrl + environmentVariables.getPasswordResetFrontendUrl() + "?token=" + token;
     }
 }

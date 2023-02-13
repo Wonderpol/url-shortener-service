@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "email_confirm_token")
+@Table(name = "auth_token")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -22,7 +22,7 @@ public class Token {
     private LocalDateTime createdAt;
     @NonNull
     private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
+    private LocalDateTime usedAt;
     @NonNull
     private TokenType tokenType;
 
