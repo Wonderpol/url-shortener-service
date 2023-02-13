@@ -66,7 +66,7 @@ class EmailConfirmationServiceTest {
     void test_validateEmailConfirmationToken_shouldThrow_EmailIsAlreadyConfirmedException() {
         //given
         Token token = Token.builder()
-                .confirmedAt(LocalDateTime.now())
+                .usedAt(LocalDateTime.now())
                 .generatedToken("Token")
                 .expiresAt(LocalDateTime.now())
                 .createdAt(LocalDateTime.now().minusDays(5))

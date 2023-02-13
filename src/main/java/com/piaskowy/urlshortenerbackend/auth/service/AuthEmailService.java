@@ -47,8 +47,7 @@ public class AuthEmailService {
     }
 
     public String createConfirmEmailLink(String frontendUrl, String token) {
-        //TODO: extract "/confirm-email" to env variable
-        return frontendUrl + "/confirm-email?token=" + token;
+        return frontendUrl + environmentVariables.getConfirmEmailFrontendUrl() + "?token=" + token;
     }
 
 }
