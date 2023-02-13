@@ -1,6 +1,7 @@
 package com.piaskowy.urlshortenerbackend.auth.controller;
 
 import com.piaskowy.urlshortenerbackend.auth.model.request.AuthenticationRequest;
+import com.piaskowy.urlshortenerbackend.auth.model.request.NewPasswordRequest;
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
 import com.piaskowy.urlshortenerbackend.auth.model.request.ResetPasswordRequest;
 import com.piaskowy.urlshortenerbackend.auth.model.response.AuthenticationResponse;
@@ -29,12 +30,18 @@ public class AuthController {
     }
 
     @GetMapping("confirm-email")
-    public void confirm(@RequestParam String token) {
+    public void confirmEmail(@RequestParam String token) {
         authService.confirmUserEmail(token);
     }
 
     @GetMapping("request-reset-password")
     public void resetPassword(@RequestBody ResetPasswordRequest request) {
-        //TODO: send reset-password email
+        authService.requestPasswordResetEmail(request.email());
     }
+
+    @GetMapping("reset-password")
+    public void resetPassword(@RequestParam String token, @RequestBody NewPasswordRequest request) {
+        authService.resetPassword(token, request.newPassword());
+    }
+
 }

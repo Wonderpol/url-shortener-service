@@ -18,4 +18,6 @@ public class EnvironmentVariables {
     private String jwtSecretKey;
     @Value("${config.email-template.confirm-email}")
     private String confirmEmailTemplateName;
+    @Value("${config.email-template.reset-password}")
+    private String resetPasswordTemplateName;
 }

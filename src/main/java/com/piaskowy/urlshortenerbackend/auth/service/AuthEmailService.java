@@ -28,7 +28,7 @@ public class AuthEmailService {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", user.getName());
-        properties.put("link", createConfirmationLink(environmentVariables.getFrontendUrl(), token));
+        properties.put("link", createConfirmEmailLink(environmentVariables.getFrontendUrl(), token));
 
         final Email email = Email.builder()
                 .to(user.getEmail())
@@ -46,8 +46,9 @@ public class AuthEmailService {
         }
     }
 
-    public String createConfirmationLink(String frontendUrl, String token) {
-        return frontendUrl + "?token=" + token;
+    public String createConfirmEmailLink(String frontendUrl, String token) {
+        //TODO: extract "/confirm-email" to env variable
+        return frontendUrl + "/confirm-email?token=" + token;
     }
 
 }
