@@ -89,8 +89,13 @@ To setup and run the project follow instructions below.
     ```yaml
     config:
       frontend-url: FRONT_END_URL
+      email-confirm-frontend-endpoint: /confirm-email
+      request-password-reset-frontend-endpoint: /reset-password
       jwt:
         secret-key: JWT_SECRET_KEY
+      email-template:
+        confirm-email: email-confirm.html
+        reset-password: reset-password.html
     
     spring:
       datasource:
