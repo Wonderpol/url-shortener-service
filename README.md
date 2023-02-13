@@ -175,6 +175,7 @@ All the available endpoints are listed below:
 
 ## TODO
 
+- [ ] Move Usage section to OpenAPI documentation
 - [ ] Add all available endpoints to README
 - [x] Add reset password feature
 - [ ] Add link statistics
