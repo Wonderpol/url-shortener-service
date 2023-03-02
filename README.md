@@ -144,32 +144,9 @@ Now if everything went well the application will be available at: `localhost:808
 Email template customization: feel free to customize emails templates that are sent to users.
 Go to `src/main/resources/templates`, open and edit html template.
 
-All the available endpoints are listed below:
-
-- Authentication:
-    - POST `api/v1/auth/register` with body:<br></br>
-  ```json
-    {
-        "email": "piaskowyjasiek@gmail.com",
-        "password": "password",
-        "name": "Jan",
-        "lastName": "Piaskowy"
-    }
-    ```
-    - POST `api/v1/auth/confirm-email?token=CONFIRM_EMAIL_TOKEN`
-    - POST `api/v1/auth/authenticate`
-  ```json
-    {
-      "email": "piaskowyjasiek@gmail.com",
-      "password": "password"
-    }
-    ```
-
-**Other endpoints will be published shortly**
+**Usage will be moved to OpenAPI Documentation**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- TODO -->
 
@@ -179,7 +156,6 @@ All the available endpoints are listed below:
 - [ ] Add all available endpoints to README
 - [x] Add reset password feature
 - [ ] Add link statistics
-- [ ] Add admin role
 - [ ] Add notification 30 days before link expire
 - [ ] Multi-language Email Support
     - [ ] Polish
