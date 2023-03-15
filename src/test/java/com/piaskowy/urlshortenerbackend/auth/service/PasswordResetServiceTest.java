@@ -15,8 +15,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -75,6 +78,26 @@ class PasswordResetServiceTest {
         assertEquals("noreply@test.com", sentEmail.from());
         assertEquals(environmentVariables.getResetPasswordTemplateName(), sentEmail.template());
         assertEquals(expectedProperties, sentEmail.properties());
+    }
+
+    @Test
+    void test_sendPasswordResetEmail_willThrow() throws MessagingException {
+        //given
+        String token = "12345678";
+        User user = User.builder()
+                .id(1L)
+                .email("example@example.com")
+                .password("test")
+                .name("Test")
+                .lastName("Test")
+                .build();
+        given(environmentVariables.getResetPasswordTemplateName()).willReturn("reset-password.html");
+        doThrow(MessagingException.class).when(emailService).sendHtmlEmail(any());
+
+        //when & then
+        assertThatThrownBy(() -> passwordResetService.sendPasswordResetEmail(token, user))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Email could not be sent");
     }
 
 }
