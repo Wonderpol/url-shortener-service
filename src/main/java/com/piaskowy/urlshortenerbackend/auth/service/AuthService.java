@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Log4j2
 public class AuthService {
     private final UserRegistrationService userRegistrationService;
-    private final AuthEmailService userEmailConfirmationService;
+    private final ActivateAccountEmailService userEmailConfirmationService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -32,7 +32,7 @@ public class AuthService {
 
 
     public AuthService(final UserRegistrationService userRegistrationService,
-                       final AuthEmailService userEmailConfirmationService,
+                       final ActivateAccountEmailService userEmailConfirmationService,
                        final AuthenticationManager authenticationManager,
                        final JwtService jwtService, final UserRepository userRepository, final TokenService tokenService, final PasswordResetService passwordResetService, final PasswordEncoder passwordEncoder) {
         this.userRegistrationService = userRegistrationService;

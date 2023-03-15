@@ -1,7 +1,6 @@
-package com.piaskowy.urlshortenerbackend.auth;
+package com.piaskowy.urlshortenerbackend.auth.service;
 
 import com.piaskowy.urlshortenerbackend.auth.model.request.RegisterRequest;
-import com.piaskowy.urlshortenerbackend.auth.service.UserRegistrationService;
 import com.piaskowy.urlshortenerbackend.user.exception.UserAlreadyExistsException;
 import com.piaskowy.urlshortenerbackend.user.model.entity.User;
 import com.piaskowy.urlshortenerbackend.user.repository.UserRepository;
@@ -22,7 +21,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class RegistrationServiceTest {
+class UserRegistrationServiceTest {
 
     @InjectMocks
     UserRegistrationService userRegistrationService;
@@ -48,7 +47,6 @@ class RegistrationServiceTest {
     @Test
     void test_signUpNewUser() {
         //given
-
         RegisterRequest registerRequest = RegisterRequest.builder()
                 .name("John")
                 .lastName("Kowalski")
@@ -63,9 +61,7 @@ class RegistrationServiceTest {
         //then
         final ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).saveAndFlush(userArgumentCaptor.capture());
-
         final User capturedValue = userArgumentCaptor.getValue();
-
         assertThat(registerRequest.email()).isEqualTo(capturedValue.getEmail());
         assertThat("encoded_password").isEqualTo(capturedValue.getPassword());
     }

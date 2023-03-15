@@ -14,11 +14,11 @@ import java.util.Map;
 
 @Service
 @Log4j2
-public class AuthEmailService {
+public class ActivateAccountEmailService {
     private final EmailService emailService;
     private final EnvironmentVariables environmentVariables;
 
-    public AuthEmailService(final EmailService emailService, final EnvironmentVariables environmentVariables) {
+    public ActivateAccountEmailService(final EmailService emailService, final EnvironmentVariables environmentVariables) {
         this.emailService = emailService;
         this.environmentVariables = environmentVariables;
     }
